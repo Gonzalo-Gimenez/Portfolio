@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 
+import { SceneErrorBoundary } from "@/components/index/SceneErrorBoundary";
+
 const WorkIndexScene = dynamic(() => import("./WorkIndexScene"), {
   ssr: false,
   loading: () => (
@@ -13,8 +15,10 @@ const WorkIndexScene = dynamic(() => import("./WorkIndexScene"), {
 
 export function WorkIndexCanvas() {
   return (
-    <div className="h-full min-h-[100dvh] w-full">
-      <WorkIndexScene />
+    <div className="absolute inset-0 overflow-hidden">
+      <SceneErrorBoundary>
+        <WorkIndexScene />
+      </SceneErrorBoundary>
     </div>
   );
 }

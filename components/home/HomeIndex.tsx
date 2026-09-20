@@ -35,7 +35,7 @@ export function HomeIndex() {
   }, [router]);
 
   return (
-    <main className="absolute inset-0">
+    <div className="relative h-full w-full">
       {webgl === null ? (
         <div className="flex h-full items-center justify-center text-sm text-[var(--text-muted)]">
           Preparando índice
@@ -45,6 +45,6 @@ export function HomeIndex() {
       ) : (
         <WorkIndexFallback />
       )}
-    </main>
+    </div>
   );
 }

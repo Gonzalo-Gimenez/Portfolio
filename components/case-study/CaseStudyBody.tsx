@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import type { WorkItem } from "@/lib/projects";
@@ -6,6 +7,15 @@ import { SITE } from "@/lib/site";
 export function CaseStudyBody({ work }: { work: WorkItem }) {
   return (
     <article className="mx-auto max-w-2xl flex-1 space-y-10 px-5 py-8 sm:px-8 sm:py-12">
+      <div className="relative aspect-[16/9] overflow-hidden">
+        <Image
+          src={work.coverPath}
+          alt=""
+          fill
+          sizes="(min-width: 768px) 42rem, 100vw"
+          className="object-cover"
+        />
+      </div>
       <header className="space-y-4 border-b border-[var(--border)] pb-8">
         <div className="flex flex-wrap items-baseline gap-3">
           <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
@@ -19,7 +29,10 @@ export function CaseStudyBody({ work }: { work: WorkItem }) {
         </div>
         <p className="text-lg text-[var(--accent)]">{work.roleLabel}</p>
         <p className="text-base leading-relaxed text-[var(--text-secondary)]">
-          {work.summary}
+          {work.why}
+        </p>
+        <p className="text-sm leading-relaxed text-[var(--text-muted)]">
+          {work.architecture}
         </p>
       </header>
 

@@ -3,16 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  ContactShadows,
-  Environment,
-  Html,
-  MeshReflectorMaterial,
-  RoundedBox,
-} from "@react-three/drei";
+import { RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import type { Group } from "three";
 
+import { DataField } from "@/components/index/DataField";
 import { WORKS, type WorkItem } from "@/lib/projects";
 
 const STELES: {
@@ -21,9 +16,9 @@ const STELES: {
   height: number;
   color: string;
 }[] = [
-  { position: [-2.55, 0, 0.35], rotY: 0.22, height: 3.35, color: "#1b322e" },
-  { position: [0.05, 0, -0.45], rotY: -0.04, height: 4.05, color: "#2d261c" },
-  { position: [2.55, 0, 0.28], rotY: -0.24, height: 3.2, color: "#1c2624" },
+  { position: [-2.05, 0, 0.3], rotY: 0.18, height: 3.35, color: "#1b322e" },
+  { position: [0, 0, -0.35], rotY: -0.03, height: 4.05, color: "#2d261c" },
+  { position: [2.05, 0, 0.22], rotY: -0.2, height: 3.2, color: "#1c2624" },
 ];
 
 function Rig() {
@@ -83,11 +78,7 @@ function WorkStele({
       restY,
       0.08,
     );
-    const s = THREE.MathUtils.lerp(
-      group.current.scale.x,
-      target.scale,
-      0.12,
-    );
+    const s = THREE.MathUtils.lerp(group.current.scale.x, target.scale, 0.12);
     group.current.scale.setScalar(s);
   });
 
@@ -113,64 +104,17 @@ function WorkStele({
           document.body.style.cursor = "auto";
         }}
       >
-        <meshPhysicalMaterial
+        <meshStandardMaterial
           color={stele.color}
-          roughness={0.22}
-          metalness={0.72}
-          clearcoat={1}
-          clearcoatRoughness={0.18}
+          roughness={0.32}
+          metalness={0.45}
           emissive={hovered ? "#3d9a8a" : "#0c1211"}
           emissiveIntensity={hovered ? 0.22 : 0.04}
           transparent
-          opacity={dimmed ? 0.38 : 1}
-          envMapIntensity={1.15}
+          opacity={dimmed ? 0.42 : 1}
         />
       </RoundedBox>
-      <Html
-        transform
-        position={[0, 0.05, 0.12]}
-        style={{ pointerEvents: "none", width: "190px" }}
-      >
-        <div className="select-none text-center">
-          <p
-            className="text-[22px] font-semibold tracking-tight text-[#f1f2f0]"
-            style={{ fontFamily: "var(--font-display), sans-serif" }}
-          >
-            {work.title}
-          </p>
-          <p
-            className="mt-1 text-[11px] text-[#8fd4c6]"
-            style={{ fontFamily: "var(--font-display), sans-serif" }}
-          >
-            {work.roleLabel}
-            {work.status === "proximo" ? " · próximo" : ""}
-          </p>
-        </div>
-      </Html>
     </group>
-  );
-}
-
-function Floor() {
-  const resolution = typeof window === "undefined" ? 256 : window.innerWidth < 768 ? 192 : 384;
-
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.72, 0]}>
-      <planeGeometry args={[28, 28]} />
-      <MeshReflectorMaterial
-        blur={[200, 60]}
-        resolution={resolution}
-        mixBlur={0.85}
-        mixStrength={28}
-        roughness={0.95}
-        depthScale={1.1}
-        minDepthThreshold={0.35}
-        maxDepthThreshold={1.35}
-        color="#141618"
-        metalness={0.55}
-        mirror={0.35}
-      />
-    </mesh>
   );
 }
 
@@ -179,37 +123,18 @@ export default function WorkIndexScene() {
 
   return (
     <Canvas
-      camera={{ position: [0, 0.45, 7.6], fov: 36 }}
-      dpr={[1, 1.6]}
-      gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
-      className="h-full w-full"
+      camera={{ position: [0, 0.5, 7.4], fov: 36 }}
+      dpr={[1, 1.5]}
+      gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
+      style={{ width: "100%", height: "100%", display: "block" }}
+      eventPrefix="client"
     >
-      <color attach="background" args={["#121416"]} />
-      <fog attach="fog" args={["#121416", 7.5, 16]} />
-      <ambientLight intensity={0.18} />
-      <spotLight
-        position={[6, 9, 5]}
-        angle={0.42}
-        penumbra={0.9}
-        intensity={48}
-        color="#d7ddd8"
-      />
-      <spotLight
-        position={[-5, 6, 3]}
-        angle={0.5}
-        penumbra={1}
-        intensity={16}
-        color="#3d9a8a"
-      />
-      <Environment preset="city" environmentIntensity={0.55} />
-      <Floor />
-      <ContactShadows
-        position={[0, -1.71, 0]}
-        opacity={0.42}
-        scale={16}
-        blur={2.6}
-        far={5}
-      />
+      <color attach="background" args={["#0d1012"]} />
+      <fog attach="fog" args={["#0d1012", 7, 20]} />
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[6, 8, 4]} intensity={1.4} />
+      <pointLight position={[-4, 3, 2]} intensity={0.55} color="#3d9a8a" />
+      <DataField />
       {WORKS.map((work, i) => (
         <WorkStele
           key={work.slug}
