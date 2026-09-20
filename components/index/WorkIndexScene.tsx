@@ -3,134 +3,119 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, RoundedBox, Text } from "@react-three/drei";
+import { Float, Grid, Html } from "@react-three/drei";
 import type { Group, Mesh } from "three";
 
-import { WORKS, type WorkSlug } from "@/lib/projects";
+import { WORKS, type WorkItem } from "@/lib/projects";
 
-const POSITIONS: [number, number, number][] = [
-  [-2.8, 0.1, 0.4],
-  [0, 0.45, -0.2],
-  [2.8, 0, 0.5],
+const PLATES: {
+  position: [number, number, number];
+  color: string;
+  rot: [number, number, number];
+}[] = [
+  { position: [-3.4, 0.15, 0.2], color: "#1c3d38", rot: [0, 0.22, -0.04] },
+  { position: [0.05, 0.55, -0.6], color: "#3a2a18", rot: [0, -0.04, 0.02] },
+  { position: [3.35, -0.05, 0.35], color: "#1a2a22", rot: [0, -0.28, 0.05] },
 ];
 
-const ACCENT = "#3d9a8a";
-
-function WorkOrb({
-  slug,
-  title,
-  roleLabel,
-  status,
-  position,
+function WorkPlate({
+  work,
   index,
 }: {
-  slug: WorkSlug;
-  title: string;
-  roleLabel: string;
-  status: "shipped" | "proximo";
-  position: [number, number, number];
+  work: WorkItem;
   index: number;
 }) {
   const router = useRouter();
   const group = useRef<Group>(null);
   const mesh = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
+  const plate = PLATES[index];
 
   useFrame((state) => {
     if (!group.current) return;
     const t = state.clock.elapsedTime;
-    group.current.rotation.y = Math.sin(t * 0.15 + index) * 0.08;
+    group.current.position.y = plate.position[1] + Math.sin(t * 0.55 + index) * 0.08;
   });
 
-  const active = hovered;
-
   return (
-    <group position={position} ref={group}>
-      <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.35}>
-        <RoundedBox
+    <group
+      ref={group}
+      position={plate.position}
+      rotation={plate.rot}
+    >
+      <Float speed={0.8} rotationIntensity={0.08} floatIntensity={0.12}>
+        <mesh
           ref={mesh}
-          args={[1.65, 2.05, 0.12]}
-          radius={0.08}
-          smoothness={4}
-          onClick={() => router.push(`/trabajo/${slug}`)}
-          onPointerOver={() => setHovered(true)}
-          onPointerOut={() => setHovered(false)}
-          scale={active ? 1.06 : 1}
+          onClick={() => router.push(`/trabajo/${work.slug}`)}
+          onPointerOver={() => {
+            setHovered(true);
+            document.body.style.cursor = "pointer";
+          }}
+          onPointerOut={() => {
+            setHovered(false);
+            document.body.style.cursor = "auto";
+          }}
+          scale={hovered ? 1.05 : 1}
         >
-          <MeshDistortMaterial
-            color={active ? "#1a2428" : "#12181c"}
-            emissive={ACCENT}
-            emissiveIntensity={active ? 0.35 : 0.12}
-            roughness={0.45}
-            metalness={0.2}
-            distort={active ? 0.18 : 0.08}
-            speed={1.5}
+          <boxGeometry args={[2.35, 3.15, 0.08]} />
+          <meshStandardMaterial
+            color={hovered ? "#243830" : plate.color}
+            roughness={0.38}
+            metalness={0.35}
+            emissive={hovered ? "#3d9a8a" : "#0b1210"}
+            emissiveIntensity={hovered ? 0.28 : 0.08}
           />
-        </RoundedBox>
-        <Text
-          position={[0, 0.35, 0.08]}
-          fontSize={0.22}
-          color="#e8ecef"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={1.4}
+        </mesh>
+        <Html
+          position={[0, 0, 0.08]}
+          center
+          distanceFactor={6.2}
+          style={{ pointerEvents: "none", width: "220px" }}
         >
-          {title}
-        </Text>
-        <Text
-          position={[0, 0.05, 0.08]}
-          fontSize={0.14}
-          color={ACCENT}
-          anchorX="center"
-          anchorY="middle"
-        >
-          {roleLabel}
-        </Text>
-        {status === "proximo" ? (
-          <Text
-            position={[0, -0.28, 0.08]}
-            fontSize={0.11}
-            color="#8a9399"
-            anchorX="center"
-            anchorY="middle"
-          >
-            próximo
-          </Text>
-        ) : null}
+          <div className="select-none text-center">
+            <p className="font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight text-[#f2f4f3]">
+              {work.title}
+            </p>
+            <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[#8fd4c6]">
+              {work.roleLabel}
+            </p>
+            {work.status === "proximo" ? (
+              <p className="mt-2 text-xs text-[#9aa3a8]">próximo</p>
+            ) : null}
+          </div>
+        </Html>
       </Float>
     </group>
-  );
-}
-
-function SceneLights() {
-  return (
-    <>
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[4, 6, 3]} intensity={1.1} />
-      <pointLight position={[-4, 2, -2]} intensity={0.4} color={ACCENT} />
-    </>
   );
 }
 
 export default function WorkIndexScene() {
   return (
     <Canvas
-      camera={{ position: [0, 0.2, 7.2], fov: 42 }}
-      gl={{ antialias: true, alpha: true }}
-      className="touch-none"
-      style={{ background: "transparent" }}
+      camera={{ position: [0, 0.4, 8.4], fov: 38 }}
+      gl={{ antialias: true, alpha: false }}
+      className="h-full w-full"
     >
-      <SceneLights />
+      <color attach="background" args={["#0b0e10"]} />
+      <fog attach="fog" args={["#0b0e10", 8, 16]} />
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[6, 8, 4]} intensity={1.35} />
+      <pointLight position={[-5, 3, 2]} intensity={0.55} color="#3d9a8a" />
+      <Grid
+        position={[0, -2.05, 0]}
+        args={[18, 18]}
+        cellSize={0.55}
+        cellThickness={0.6}
+        cellColor="#1c2522"
+        sectionSize={2.2}
+        sectionThickness={1.1}
+        sectionColor="#2c4a42"
+        fadeDistance={14}
+        fadeStrength={1.2}
+        infiniteGrid
+      />
       {WORKS.map((work, i) => (
-        <WorkOrb
-          key={work.slug}
-          slug={work.slug}
-          title={work.title}
-          roleLabel={work.roleLabel}
-          status={work.status}
-          position={POSITIONS[i]}
-          index={i}
-        />
+        <WorkPlate key={work.slug} work={work} index={i} />
       ))}
     </Canvas>
   );

@@ -19,7 +19,10 @@ export function HomeIndex() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
         return;
       }
       const index = Number(e.key) - 1;
@@ -32,31 +35,16 @@ export function HomeIndex() {
   }, [router]);
 
   return (
-    <main className="relative flex min-h-[min(55dvh,560px)] flex-1 flex-col">
+    <main className="absolute inset-0">
       {webgl === null ? (
-        <div
-          className="flex flex-1 items-center justify-center text-sm text-[var(--text-muted)]"
-          aria-live="polite"
-        >
-          Preparando índice…
+        <div className="flex h-full items-center justify-center text-sm text-[var(--text-muted)]">
+          Preparando índice
         </div>
       ) : use3D ? (
         <WorkIndexCanvas />
       ) : (
         <WorkIndexFallback />
       )}
-      {webgl === true && !use3D && reducedMotion ? (
-        <p className="px-5 pb-6 text-xs text-[var(--text-muted)] sm:px-8">
-          Vista 2D activa por preferencia de movimiento reducido. Los enlaces
-          del panel izquierdo abren cada proyecto.
-        </p>
-      ) : null}
-      {webgl === false ? (
-        <p className="px-5 pb-6 text-xs text-[var(--text-muted)] sm:px-8">
-          WebGL no disponible en este navegador. Usá la grilla o los enlaces del
-          panel.
-        </p>
-      ) : null}
     </main>
   );
 }
