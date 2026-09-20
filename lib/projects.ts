@@ -43,7 +43,7 @@ export const WORKS: WorkItem[] = [
       "UI de exploración con gráficos y escena 3D en el cliente.",
     ],
     coverPath: "/covers/cover-insightai.png",
-    repoUrl: "https://github.com/Gonzalo-Gimenez/insightai",
+    repoUrl: "https://github.com/Gonzalo-Gimenez/InsightAI",
     demoUrl: "https://insightai-frontend.vercel.app",
   },
   {
@@ -64,7 +64,7 @@ export const WORKS: WorkItem[] = [
       "Scripts de ingestión para reemplazar el CSV demo por datos.gob.ar.",
     ],
     coverPath: "/covers/cover-energia.png",
-    repoUrl: "https://github.com/Gonzalo-Gimenez/energy-analytics-ar",
+    repoUrl: "https://github.com/Gonzalo-Gimenez/Energy-Data",
   },
   {
     slug: "flota",
@@ -84,7 +84,7 @@ export const WORKS: WorkItem[] = [
       "Tests de calidad sobre reglas de negocio del dominio flota.",
     ],
     coverPath: "/covers/cover-flota.png",
-    repoUrl: "https://github.com/Gonzalo-Gimenez/fleet-stock-pipeline",
+    repoUrl: "https://github.com/Gonzalo-Gimenez/AutoStock-Data",
   },
 ];
 
