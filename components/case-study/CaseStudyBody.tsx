@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { WorkItem } from "@/lib/projects";
-import { SITE } from "@/lib/site";
 
 export function CaseStudyBody({ work }: { work: WorkItem }) {
+  const hasLiveLinks = Boolean(work.demoUrl || work.repoUrl);
+
   return (
     <article className="mx-auto max-w-2xl flex-1 space-y-10 px-5 py-8 sm:px-8 sm:py-12">
       <div className="relative aspect-[16/9] overflow-hidden">
@@ -65,22 +66,33 @@ export function CaseStudyBody({ work }: { work: WorkItem }) {
         </ul>
       </section>
 
-      {work.slug === "insightai" ? (
+      {hasLiveLinks ? (
         <section className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-5">
           <h2 className="text-lg font-medium text-[var(--text-primary)]">
-            Demo pública
+            Enlaces
           </h2>
-          <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-            InsightAI corre como aplicación aparte. Todavía no hay URL de demo
-            pública en este sitio. Si necesitás ver el producto en acción,
-            escribime y coordinamos acceso o revisión de código.
-          </p>
-          <a
-            href={`mailto:${SITE.email}?subject=InsightAI%20-%20consulta`}
-            className="inline-flex rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[var(--accent-fg)] transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-primary)]"
-          >
-            Pedir acceso
-          </a>
+          <div className="flex flex-wrap gap-3">
+            {work.demoUrl ? (
+              <a
+                href={work.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[var(--accent-fg)] transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-primary)]"
+              >
+                Abrir demo
+              </a>
+            ) : null}
+            {work.repoUrl ? (
+              <a
+                href={work.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex rounded-full border border-[var(--border)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              >
+                Código en GitHub
+              </a>
+            ) : null}
+          </div>
         </section>
       ) : null}
 
