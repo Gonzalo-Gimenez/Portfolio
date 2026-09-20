@@ -11,7 +11,7 @@ Apply in [github.com/Gonzalo-Gimenez](https://github.com/Gonzalo-Gimenez). **Do 
 1. [InsightAI](https://github.com/Gonzalo-Gimenez/InsightAI) — Applied AI / tool calling over real metrics
 2. [Energy-Data](https://github.com/Gonzalo-Gimenez/Energy-Data) — Data Analyst, public energy prices
 3. [AutoStock-Data](https://github.com/Gonzalo-Gimenez/AutoStock-Data) — Data Engineer, fleet stock pipeline
-4. [portfolio](https://github.com/Gonzalo-Gimenez/portfolio) — This site (Next.js 15)
+4. [Portfolio](https://github.com/Gonzalo-Gimenez/Portfolio) — This site (Next.js 15)
 
 ## Profile README
 
