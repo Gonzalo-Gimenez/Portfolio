@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #0e1114;
-  --surface-elevated: #151a1f;
-  --surface-hover: #1a2128;
-  --border: #2a3239;
-  --text-primary: #eef1f3;
-  --text-secondary: #b4bcc4;
-  --text-muted: #7d8790;
+  --bg-base: #121416;
+  --surface-elevated: #1a1d20;
+  --surface-hover: #22262a;
+  --border: #2c3236;
+  --text-primary: #f1f2f0;
+  --text-secondary: #b7beb8;
+  --text-muted: #7e8780;
   --accent: #3d9a8a;
   --accent-fg: #061210;
 }
@@ -15,7 +15,7 @@
 @theme inline {
   --color-background: var(--bg-base);
   --color-foreground: var(--text-primary);
-  --font-sans: var(--font-body);
+  --font-sans: var(--font-display);
 }
 
 body {
@@ -25,16 +25,28 @@ body {
 
 h1,
 h2 {
-  font-family: var(--font-display), var(--font-body), system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--accent) 35%, transparent);
+  background: color-mix(in oklab, var(--accent) 38%, transparent);
   color: var(--text-primary);
 }
 
 :focus-visible {
-  outline-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
 @media (prefers-reduced-motion: reduce) {

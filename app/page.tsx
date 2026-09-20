@@ -7,7 +7,7 @@ export default function Home() {
       <HomeIndex />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(8,10,12,0.62)_0%,transparent_28%,transparent_62%,rgba(8,10,12,0.72)_100%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-44 bg-[linear-gradient(180deg,rgba(18,20,22,0.72)_0%,transparent_100%)]"
       />
       <PortfolioHud />
     </div>

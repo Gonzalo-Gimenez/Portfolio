@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 
 import "./globals.css";
 import { SITE } from "@/lib/site";
 
 const display = Bricolage_Grotesque({
   variable: "--font-display",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const body = DM_Sans({
-  variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
 });
@@ -38,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark">
       <body
-        className={`${display.variable} ${body.variable} font-[family-name:var(--font-body)] antialiased`}
+        className={`${display.variable} font-[family-name:var(--font-display)] antialiased`}
       >
         {children}
       </body>
