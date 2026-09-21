@@ -16,7 +16,7 @@ export function XenonCover({
           alt={alt}
           fill
           sizes="(min-width: 768px) 48rem, 100vw"
-          className="object-cover"
+          className="object-contain bg-[#0c0f11]"
           priority
         />
       </div>

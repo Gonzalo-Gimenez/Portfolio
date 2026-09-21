@@ -128,7 +128,7 @@ body::after {
 .xenon-cover {
   position: relative;
   isolation: isolate;
-  padding-bottom: 4.5rem;
+  padding-bottom: 2.25rem;
 }
 
 .xenon-cover-frame {
