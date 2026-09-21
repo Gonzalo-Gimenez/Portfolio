@@ -29,18 +29,18 @@ export const WORKS: WorkItem[] = [
       "Aplicación propia: el modelo no afirma una cifra si no la obtuvo de una herramienta o de SQL.",
     why: "Un negocio que usa IA para decidir no puede convivir con números inventados. InsightAI existe para demostrar un flujo donde la respuesta queda anclada a consultas reales, no a la elocuencia del modelo.",
     architecture:
-      "El usuario pregunta en lenguaje natural. Groq invoca herramientas Python sobre datos leídos con SQL fijo en PostgreSQL. FastAPI orquesta; el LLM resume hechos, no inventa cifras. Front en Next.js 15 con métricas y escena three.js.",
+      "Workspace Nortec (~190k líneas, mar 2024–sep 2026): el copiloto en Groq invoca herramientas SQL (KPIs, series, rankings, mix) o un SELECT validado en PostgreSQL read-only. FastAPI devuelve respuesta + ViewSpec; el canvas (KPIs y gráficos 2D) se actualiza con cada pregunta. Next.js 15 + Recharts.",
     stack: [
       "FastAPI",
       "PostgreSQL",
       "Groq (tool calling)",
       "Next.js 15",
-      "three.js",
+      "Recharts",
     ],
     highlights: [
-      "Preguntas en lenguaje natural con respuestas ancladas a métricas computadas.",
-      "Tool calling para acotar qué puede afirmar el LLM.",
-      "UI de exploración con gráficos y escena 3D en el cliente.",
+      "Warehouse estrella retail con seed determinista y consultas agregadas en SQL.",
+      "Copiloto con historial, SQL visible y canvas reactivo al chat.",
+      "SELECT validado y rol read-only para consultas ad-hoc auditables.",
     ],
     coverPath: "/covers/cover-insightai.png",
     repoUrl: "https://github.com/Gonzalo-Gimenez/InsightAI",
