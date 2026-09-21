@@ -7,8 +7,8 @@ import * as THREE from "three";
 function cloudGeometry(count: number) {
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
-  const dim = new THREE.Color("#61706a");
-  const lit = new THREE.Color("#3d9a8a");
+  const dim = new THREE.Color("#5a6a7a");
+  const lit = new THREE.Color("#6ec8ff");
   for (let i = 0; i < count; i += 1) {
     positions[i * 3] = (Math.random() - 0.5) * 28;
     positions[i * 3 + 1] = Math.random() * 10 - 1.8;
@@ -27,7 +27,7 @@ function cloudGeometry(count: number) {
 function latticeGeometry(step: number, extent: number, y: number) {
   const pts: number[] = [];
   const cols: number[] = [];
-  const c = new THREE.Color("#3f4a46");
+  const c = new THREE.Color("#3d4a58");
   for (let x = -extent; x <= extent; x += step) {
     for (let z = -extent; z <= extent; z += step) {
       pts.push(x, y, z);
@@ -58,7 +58,7 @@ export function DataField() {
 
   return (
     <group>
-      <points ref={cloudRef} geometry={cloudGeom}>
+      <points ref={cloudRef} geometry={cloudGeom} raycast={() => null}>
         <pointsMaterial
           size={0.03}
           vertexColors
@@ -69,7 +69,7 @@ export function DataField() {
           toneMapped={false}
         />
       </points>
-      <points geometry={latticeGeom}>
+      <points geometry={latticeGeom} raycast={() => null}>
         <pointsMaterial
           size={0.018}
           vertexColors

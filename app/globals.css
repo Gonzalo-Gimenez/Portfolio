@@ -1,15 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #121416;
-  --surface-elevated: #1a1d20;
-  --surface-hover: #22262a;
-  --border: #2c3236;
-  --text-primary: #f1f2f0;
-  --text-secondary: #b7beb8;
-  --text-muted: #7e8780;
-  --accent: #3d9a8a;
-  --accent-fg: #061210;
+  --bg-base: #101318;
+  --surface-elevated: #171c22;
+  --surface-hover: #1e252d;
+  --border: #2c3540;
+  --text-primary: #eef3f8;
+  --text-secondary: #b4c0cc;
+  --text-muted: #7d8a98;
+  --accent: #6ec8ff;
+  --accent-fg: #071018;
+}
+
+.xenon-text {
+  color: var(--accent);
+  text-shadow:
+    0 0 8px color-mix(in oklab, var(--accent) 80%, transparent),
+    0 0 22px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+.xenon-fill {
+  box-shadow:
+    0 0 14px color-mix(in oklab, var(--accent) 55%, transparent),
+    0 0 32px color-mix(in oklab, var(--accent) 22%, transparent);
 }
 
 @theme inline {
@@ -110,6 +123,68 @@ body::after {
 
 .cover-drift {
   animation-name: cover-drift;
+}
+
+.xenon-cover {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: 4.5rem;
+}
+
+.xenon-cover-frame {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 2.5px solid rgba(255, 248, 252, 0.9);
+  box-shadow:
+    0 0 14px rgba(255, 232, 240, 0.45),
+    0 0 32px rgba(255, 244, 248, 0.22);
+}
+
+.xenon-cover-halo {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 52%;
+  height: 70%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 78% 52% at 50% 10%,
+    rgba(255, 252, 254, 0.55) 0%,
+    rgba(255, 236, 244, 0.28) 30%,
+    rgba(255, 244, 248, 0.1) 52%,
+    transparent 76%
+  );
+  mask-image: radial-gradient(
+    ellipse 90% 75% at 50% 6%,
+    #000 0%,
+    #000 38%,
+    transparent 78%
+  );
+}
+
+.xenon-cover-halo::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 2%;
+  height: 52%;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 248, 252, 0.55);
+  box-shadow:
+    0 0 22px rgba(255, 232, 240, 0.5),
+    0 0 40px rgba(255, 244, 248, 0.2),
+    inset 0 0 18px rgba(255, 255, 255, 0.16);
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 48%,
+    transparent 100%
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {

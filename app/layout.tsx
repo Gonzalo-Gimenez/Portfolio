@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Syne } from "next/font/google";
 
 import "./globals.css";
 import { SITE } from "@/lib/site";
+import { StarField } from "@/components/fx/StarField";
 
-const display = Bricolage_Grotesque({
+const display = Syne({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -35,7 +37,8 @@ export default function RootLayout({
         className={`${display.variable} font-[family-name:var(--font-display)] antialiased`}
         suppressHydrationWarning
       >
-        {children}
+        <StarField />
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );

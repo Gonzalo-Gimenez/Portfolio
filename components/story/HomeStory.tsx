@@ -20,7 +20,7 @@ export function HomeStory() {
             ¿Hablamos?
           </h2>
           <p className="mt-5 max-w-[40ch] text-[var(--text-secondary)]">
-            Si buscás un Applied AI Engineer que ancla las respuestas a datos
+            Si buscás un Data AI Engineer que ancla las respuestas a datos
             reales, escribime.
           </p>
           <a

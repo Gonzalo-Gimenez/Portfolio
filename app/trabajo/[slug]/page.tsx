@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CaseStudyBody } from "@/components/case-study/CaseStudyBody";
-import { PortfolioHud } from "@/components/hud/PortfolioHud";
+import { SiteNav } from "@/components/nav/SiteNav";
 import { getWork, WORK_SLUGS } from "@/lib/projects";
 import { SITE } from "@/lib/site";
 
@@ -32,9 +32,9 @@ export default async function TrabajoPage({ params }: PageProps) {
   if (!work) notFound();
 
   return (
-    <div className="relative flex min-h-[100dvh] flex-col lg:flex-row">
-      <PortfolioHud showBack />
+    <>
+      <SiteNav />
       <CaseStudyBody work={work} />
-    </div>
+    </>
   );
 }

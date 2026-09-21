@@ -92,12 +92,12 @@ export function PortfolioHud({ showBack = false }: { showBack?: boolean }) {
 
 export function ContactRow() {
   return (
-    <>
+    <span className="inline-flex flex-nowrap items-center gap-x-5">
       <a
         href={SITE.github}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       >
         <GithubLogo size={18} weight="regular" aria-hidden />
         GitHub
@@ -106,14 +106,14 @@ export function ContactRow() {
         href={SITE.linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       >
         <LinkedinLogo size={18} weight="regular" aria-hidden />
         LinkedIn
       </a>
       <a
         href={`mailto:${SITE.email}`}
-        className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       >
         <EnvelopeSimple size={18} weight="regular" aria-hidden />
         Mail
@@ -122,11 +122,11 @@ export function ContactRow() {
         href={SITE.cvPath}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+        className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       >
         <FilePdf size={18} weight="regular" aria-hidden />
         CV
       </a>
-    </>
+    </span>
   );
 }

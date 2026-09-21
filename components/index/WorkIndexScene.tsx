@@ -108,7 +108,7 @@ function WorkStele({
           color={stele.color}
           roughness={0.32}
           metalness={0.45}
-          emissive={hovered ? "#3d9a8a" : "#0c1211"}
+          emissive={hovered ? "#6ec8ff" : "#0b1016"}
           emissiveIntensity={hovered ? 0.22 : 0.04}
           transparent
           opacity={dimmed ? 0.42 : 1}
@@ -133,7 +133,7 @@ export default function WorkIndexScene() {
       <fog attach="fog" args={["#0d1012", 7, 20]} />
       <ambientLight intensity={0.35} />
       <directionalLight position={[6, 8, 4]} intensity={1.4} />
-      <pointLight position={[-4, 3, 2]} intensity={0.55} color="#3d9a8a" />
+      <pointLight position={[-4, 3, 2]} intensity={0.55} color="#6ec8ff" />
       <DataField />
       {WORKS.map((work, i) => (
         <WorkStele

@@ -4,18 +4,21 @@ export const SITE = {
   lastName: "Gimenez",
   role: "Applied AI Engineer",
   location: "Buenos Aires, Argentina",
+  coverLabel: "Portfolio personal",
   subtitle:
     "IA que responde con datos verificados. Análisis y datos, en proyectos aparte.",
   github: "https://github.com/Gonzalo-Gimenez",
   linkedin: "https://www.linkedin.com/in/gonzalo-gimenez-/",
   email: "gonzalodangimenez@gmail.com",
+  phone: "+54 11 3430-7458",
+  phoneHref: "tel:+541134307458",
   cvPath: "/cv/CV-Gonzalo-Gimenez.pdf",
-  photoPath: "/DeTraje4.jpeg",
+  photoPath: "/perfil-camisa.jpg",
   coverPath: "/portada.jpg",
   education:
-    "Técnico en desarrollo de software, egresado a fines de 2025. Cursando Licenciatura en Ciencia de Datos.",
-  manifesto:
-    "No vendo un chatbot. Construyo sistemas que responden con datos.",
+    "Tecnicatura Superior en Desarrollo de Software, IFTS 11. Cursando Licenciatura en Ciencia de Datos en la Universidad de la Ciudad de Buenos Aires.",
+  languages: "Inglés intermedio.",
+  manifesto: "Sobre mí",
   about:
-    "Applied AI Engineer en Buenos Aires. El modelo no inventa cifras: consulta herramientas y SQL antes de responder. Análisis y datos se demuestran en proyectos aparte, no como segundo titular.",
+    "Applied AI Engineer con formación técnica en desarrollo de software y estudiante de Ciencia de Datos. Programación, bases, SQL, frontend y backend, Python, APIs, automatización e inteligencia artificial. El modelo no inventa cifras: consulta herramientas y SQL antes de responder.",
 } as const;
