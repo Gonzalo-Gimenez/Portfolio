@@ -47,7 +47,7 @@ export function StarField() {
       }));
     };
 
-    const draw = (t: number) => {
+    const draw = () => {
       if (!running) return;
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
       for (const s of stars) {
@@ -72,7 +72,7 @@ export function StarField() {
     };
 
     resize();
-    draw(0);
+    draw();
     window.addEventListener("resize", resize);
     return () => {
       running = false;

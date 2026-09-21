@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useRouter } from "next/navigation";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
@@ -508,7 +508,7 @@ export default function CoverflowScene({
           display: "block",
           background: "transparent",
         }}
-        eventSource={wrap}
+        eventSource={wrap as RefObject<HTMLElement>}
         eventPrefix="offset"
       >
         <Suspense fallback={null}>
