@@ -20,8 +20,8 @@ export function IdentityBanner() {
             <h1 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
               {SITE.firstName} {SITE.lastName}
             </h1>
-            <p className="xenon-text mt-3 text-lg sm:text-xl">
-              {SITE.role}
+            <p className="xenon-text mt-3 text-lg leading-snug sm:text-xl">
+              {SITE.roles}
             </p>
             <p className="mt-1.5 text-lg text-[var(--text-secondary)] sm:text-xl">
               {SITE.coverLabel}

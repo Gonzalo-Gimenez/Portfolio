@@ -2,11 +2,12 @@ export const SITE = {
   name: "Gonzalo Gimenez",
   firstName: "Gonzalo",
   lastName: "Gimenez",
-  role: "Applied AI Engineer",
+  role: "Data & AI Engineer",
+  roles: "AI Engineer · Data Analyst · Data Engineer",
   location: "Buenos Aires, Argentina",
   coverLabel: "Portfolio personal",
   subtitle:
-    "IA que responde con datos verificados. Análisis y datos, en proyectos aparte.",
+    "AI Engineer, Data Analyst y Data Engineer. IA que responde con datos verificados.",
   github: "https://github.com/Gonzalo-Gimenez",
   linkedin: "https://www.linkedin.com/in/gonzalo-gimenez-/",
   email: "gonzalodangimenez@gmail.com",
@@ -20,5 +21,5 @@ export const SITE = {
   languages: "Inglés intermedio.",
   manifesto: "Sobre mí",
   about:
-    "Applied AI Engineer con formación técnica en desarrollo de software y estudiante de Ciencia de Datos. Programación, bases, SQL, frontend y backend, Python, APIs, automatización e inteligencia artificial. El modelo no inventa cifras: consulta herramientas y SQL antes de responder.",
+    "AI Engineer, Data Analyst y Data Engineer, con formación técnica en desarrollo de software y estudiante de Ciencia de Datos. Programación, bases, SQL, frontend y backend, Python, APIs, automatización e inteligencia artificial. El modelo no inventa cifras: consulta herramientas y SQL antes de responder.",
 } as const;

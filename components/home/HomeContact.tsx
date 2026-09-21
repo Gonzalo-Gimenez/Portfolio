@@ -32,8 +32,8 @@ export function HomeContact() {
           Contacto
         </h2>
         <p className="mt-4 max-w-[40ch] text-[var(--text-secondary)]">
-          Si buscás un Applied AI Engineer que ancla las respuestas a datos
-          reales, escribime.
+          Si buscás un AI Engineer, Data Analyst o Data Engineer, podés
+          escribirme.
         </p>
 
         <form

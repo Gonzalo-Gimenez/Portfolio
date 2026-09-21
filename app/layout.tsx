@@ -14,12 +14,12 @@ const display = Syne({
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE.name} · ${SITE.role}`,
+    default: `${SITE.name} · ${SITE.roles}`,
     template: `%s · ${SITE.name}`,
   },
   description: SITE.subtitle,
   openGraph: {
-    title: `${SITE.name} · ${SITE.role}`,
+    title: `${SITE.name} · ${SITE.roles}`,
     description: SITE.subtitle,
     locale: "es_AR",
     type: "website",
