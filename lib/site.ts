@@ -13,7 +13,7 @@ export const SITE = {
   email: "gonzalodangimenez@gmail.com",
   phone: "+54 11 3430-7458",
   phoneHref: "tel:+541134307458",
-  cvPath: "/cv/CV-Gonzalo-Gimenez.pdf",
+  cvPath: "/cv/CV_Gonzalo_Gimenez.pdf",
   photoPath: "/perfil-camisa.jpg",
   coverPath: "/portada.jpg",
   education:
