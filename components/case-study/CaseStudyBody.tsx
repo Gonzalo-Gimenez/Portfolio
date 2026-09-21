@@ -18,7 +18,7 @@ export function CaseStudyBody({ work }: { work: WorkItem }) {
         Volver
       </Link>
 
-      <div className="mt-8 mx-auto max-w-xl">
+      <div className="mt-8">
         <XenonCover src={work.coverPath} alt={work.title} />
       </div>
 
