@@ -112,7 +112,7 @@ export function ContactRow() {
         LinkedIn
       </a>
       <a
-        href={`mailto:${SITE.email}`}
+        href={`mailto:${SITE.email}?subject=${encodeURIComponent("Consulta portfolio")}`}
         className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       >
         <EnvelopeSimple size={18} weight="regular" aria-hidden />

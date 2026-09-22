@@ -5,29 +5,23 @@ import { useState } from "react";
 import { CenterRule } from "@/components/layout/SectionMark";
 import { SITE } from "@/lib/site";
 
-type Status = "idle" | "sending" | "sent" | "opened";
-
-function openCompose(name: string, email: string, message: string) {
+function mailtoHref(name: string, from: string, message: string) {
   const subject = encodeURIComponent(
-    `Consulta portfolio${name ? ` - ${name}` : ""}`,
+    `Consulta portfolio${name ? ` — ${name}` : ""}`,
   );
   const body = encodeURIComponent(
-    `Nombre: ${name}\nEmail: ${email}\n\n${message}`,
+    `Nombre: ${name}\nEmail: ${from}\n\n${message}`,
   );
-  const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(SITE.email)}&su=${subject}&body=${body}`;
-  const opened = window.open(gmail, "_blank", "noopener,noreferrer");
-  if (!opened) {
-    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
-  }
+  return `mailto:${SITE.email}?subject=${subject}&body=${body}`;
 }
 
 export function HomeContact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<Status>("idle");
+  const [status, setStatus] = useState<"idle" | "opened">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
@@ -35,30 +29,7 @@ export function HomeContact() {
     if (!trimmedName || !trimmedEmail || trimmedMessage.length < 8) {
       return;
     }
-
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: trimmedName,
-          email: trimmedEmail,
-          message: trimmedMessage,
-        }),
-      });
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean };
-      if (res.ok && data.ok) {
-        setStatus("sent");
-        setName("");
-        setEmail("");
-        setMessage("");
-        return;
-      }
-    } catch {
-      /* fallback below */
-    }
-    openCompose(trimmedName, trimmedEmail, trimmedMessage);
+    window.location.href = mailtoHref(trimmedName, trimmedEmail, trimmedMessage);
     setStatus("opened");
   };
 
@@ -130,23 +101,17 @@ export function HomeContact() {
           </div>
           <button
             type="submit"
-            disabled={status === "sending"}
-            className="xenon-fill inline-flex w-fit rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97] disabled:opacity-60"
+            className="xenon-fill inline-flex w-fit rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97]"
           >
-            {status === "sending" ? "Enviando…" : "Enviar"}
+            Enviar
           </button>
-          {status === "sent" ? (
-            <p className="text-sm text-[var(--accent)]" role="status">
-              Llegó. Te respondo a la brevedad.
-            </p>
-          ) : null}
           {status === "opened" ? (
             <p className="text-sm text-[var(--text-secondary)]" role="status">
-              Se abrió Gmail con el mensaje listo. Si no ves la ventana,{" "}
+              Se abrió tu correo con el mensaje listo para{" "}
               <a className="underline" href={`mailto:${SITE.email}`}>
-                escribime a {SITE.email}
+                {SITE.email}
               </a>
-              .
+              . Si no se abrió, tocá esa dirección.
             </p>
           ) : null}
         </form>
