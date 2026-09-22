@@ -56,12 +56,12 @@ export const WORKS: WorkItem[] = [
       "Análisis exploratorio sobre datos públicos de energía: de la pregunta operativa a la métrica reproducible.",
     why: "En energía las decisiones se mueven por consumo, costo y desvío. El analista no 'hace un dashboard': traduce una pregunta de negocio a una cifra que se puede repetir, con supuestos escritos.",
     architecture:
-      "CSV público de precios (fuente en GitHub) → warehouse PostgreSQL local con Docker (`fuel_prices`, puerto 5435). SQL versionado por pregunta de negocio. Informe Power BI (PBIP) sobre el mismo CSV. Memo de una página con límites del dataset. Sin LLM ni nube de pago.",
-    stack: ["Python", "PostgreSQL", "SQL", "Power BI", "pandas", "Docker Compose"],
+      "CSV público de precios → DuckDB en el venv de Python (`pip install duckdb`) → SQL versionado por pregunta. Informe Power BI sobre el mismo CSV. Memo de una página. Postgres en Docker queda como warehouse opcional, no como el flujo diario.",
+    stack: ["Python", "DuckDB", "SQL", "Power BI", "pandas"],
     highlights: [
-      "Cinco preguntas de negocio con SQL sobre el warehouse y salida en output/.",
+      "Cinco preguntas de negocio con SQL en DuckDB y salida en output/.",
       "Informe Power BI con medidas DAX y PNG para el portfolio.",
-      "Demo reproducible: docker compose up y la tabla queda lista.",
+      "Motor analítico instalado con pip; sin DBeaver ni tarjeta de Google.",
     ],
     coverPath: "/covers/cover-energia.png",
     repoUrl: "https://github.com/Gonzalo-Gimenez/Energy-Data",

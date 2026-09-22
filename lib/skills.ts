@@ -23,6 +23,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
     items: [
       "SQL",
       "PostgreSQL",
+      "DuckDB",
       "MongoDB",
       "Power BI",
       "pandas",
