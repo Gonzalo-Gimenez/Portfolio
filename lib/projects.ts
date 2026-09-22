@@ -79,9 +79,9 @@ export const WORKS: WorkItem[] = [
       "CSV de movimientos y unidades → validación en Python → staging en PostgreSQL → SQL de hechos y vista `fleet_status_snapshot` por unidad/sucursal. Job idempotente (`run_pipeline.py`) listo para cron o Compose.",
     stack: ["Python", "PostgreSQL", "SQL", "Docker Compose"],
     highlights: [
-      "Validación de enums y IDs duplicados antes de cargar.",
-      "Capas staging y marts con SQL explícito.",
-      "Tests de calidad sobre reglas de negocio del dominio flota.",
+      "Validación de enums y IDs duplicados; ejemplos de CSV rechazado en el repo.",
+      "Job idempotente con conteos auditables y vista fleet_status_snapshot.",
+      "Tests de integración contra PostgreSQL en Docker (puerto 5434).",
     ],
     coverPath: "/covers/cover-flota.png",
     repoUrl: "https://github.com/Gonzalo-Gimenez/AutoStock-Data",
