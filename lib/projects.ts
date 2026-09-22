@@ -56,12 +56,12 @@ export const WORKS: WorkItem[] = [
       "Análisis exploratorio sobre datos públicos de energía: de la pregunta operativa a la métrica reproducible.",
     why: "En energía las decisiones se mueven por consumo, costo y desvío. El analista no 'hace un dashboard': traduce una pregunta de negocio a una cifra que se puede repetir, con supuestos escritos.",
     architecture:
-      "CSV público de precios de combustible → DuckDB como almacén analítico local. SQL versionado por pregunta de negocio. Memo de una página con límites del dataset. Sin LLM en el MVP.",
-    stack: ["Python", "DuckDB", "SQL", "pandas"],
+      "CSV público de precios → Google BigQuery (energy_ar.fuel_prices). SQL versionado por pregunta de negocio. Informe Power BI (PBIP) + capturas en el repo. Memo de una página con límites del dataset. Sin LLM.",
+    stack: ["Python", "BigQuery", "SQL", "Power BI", "pandas"],
     highlights: [
-      "Cinco preguntas de negocio con SQL reproducible.",
+      "Cinco preguntas de negocio con SQL en BigQuery y salida en output/.",
+      "Informe Power BI con medidas DAX y PNG para el portfolio.",
       "Memo de analista con límites explícitos del dataset público.",
-      "Scripts de ingestión para reemplazar el CSV demo por datos.gob.ar.",
     ],
     coverPath: "/covers/cover-energia.png",
     repoUrl: "https://github.com/Gonzalo-Gimenez/Energy-Data",
@@ -76,7 +76,7 @@ export const WORKS: WorkItem[] = [
       "Pipeline de flota: ingesta, modelado y entrega para reporting, con reproceso y calidad mínima.",
     why: "Una operación de flota no se gestiona con Excel suelto. Si la telemetría duplica, llega tarde o cambia de forma, el reporte miente. El proyecto muestra el oficio de datos: contrato entre fuente y consumidor.",
     architecture:
-      "CSV de movimientos y unidades → validación en Python → staging en PostgreSQL → SQL de hechos y snapshot de estado por unidad. Job idempotente (`run_pipeline.py`) listo para cron o Compose.",
+      "CSV de movimientos y unidades → validación en Python → staging en PostgreSQL → SQL de hechos y vista `fleet_status_snapshot` por unidad/sucursal. Job idempotente (`run_pipeline.py`) listo para cron o Compose.",
     stack: ["Python", "PostgreSQL", "SQL", "Docker Compose"],
     highlights: [
       "Validación de enums y IDs duplicados antes de cargar.",
