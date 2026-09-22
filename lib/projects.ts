@@ -1,4 +1,4 @@
-export type WorkSlug = "insightai" | "energia" | "flota";
+export type WorkSlug = "insightai" | "energia" | "flota" | "autostock-ai";
 
 export type WorkStatus = "shipped" | "proximo";
 
@@ -85,6 +85,33 @@ export const WORKS: WorkItem[] = [
     ],
     coverPath: "/covers/cover-flota.png",
     repoUrl: "https://github.com/Gonzalo-Gimenez/AutoStock-Data",
+  },
+  {
+    slug: "autostock-ai",
+    title: "AutoStock-AI",
+    roleLabel: "AI Engineer",
+    status: "shipped",
+    tagline: "Flota multi-agencia con costos que respetan la línea de negocio.",
+    summary:
+      "Landing, escritorio con copiloto y fichas por unidad: el 0km solo lleva seguro; renta y usados cargan el ledger que corresponde.",
+    why:
+      "AutoStock opera varias sucursales en CABA sobre la misma flota. No alcanza un pipeline DE: el negocio necesita cargar multas, patentes e ingresos de alquiler sin romper reglas por línea, y preguntar P&L en lenguaje natural con SQL visible.",
+    architecture:
+      "Postgres propio (:5436) con agencies, units y ledger. FastAPI valida cada POST según matriz 0km/usados/renta; Groq invoca kpis_flota, stock, mix de costos y SELECT read-only. Next.js: landing editorial oscura, /app con canvas Recharts y /app/unidades para operación.",
+    stack: [
+      "FastAPI",
+      "PostgreSQL",
+      "Groq (tool calling)",
+      "Next.js 15",
+      "Recharts",
+    ],
+    highlights: [
+      "Reglas de ledger por línea: multa en 0km devuelve 400 en API y UI.",
+      "Copiloto con tools de flota y canvas de stock y P&L por agencia.",
+      "Warehouse separado de AutoStock-Data; extiende el dominio sin pisar el DE demo.",
+    ],
+    coverPath: "/covers/cover-autostock-ai.png",
+    repoUrl: "https://github.com/Gonzalo-Gimenez/AutoStock-AI",
   },
 ];
 

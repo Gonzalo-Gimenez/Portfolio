@@ -25,6 +25,7 @@ const XENON_ROSE = "#ffd9e8";
 const SLOTS = [
   { x: 0, y: 0, z: 0.55, rotY: 0, scale: 1.18 },
   { x: 3.05, y: 0, z: -1.05, rotY: -0.58, scale: 0.78 },
+  { x: 0, y: 0, z: -2.45, rotY: 0, scale: 0.52 },
   { x: -3.05, y: 0, z: -1.05, rotY: 0.58, scale: 0.78 },
 ] as const;
 
@@ -357,7 +358,7 @@ function ProjectCard({
   const texture = textures[cardIndex];
   const rel = relativeSlot(cardIndex, activeIndex);
   const isFront = rel === 0;
-  const slot = SLOTS[rel];
+  const slot = SLOTS[rel] ?? SLOTS[0];
   const targetPos = useRef(new THREE.Vector3(slot.x, slot.y, slot.z));
   const rimStrength = isFront ? 1 : hovered ? 0.85 : 0.45;
   const washStrength = isFront ? 1 : hovered ? 0.7 : 0.4;

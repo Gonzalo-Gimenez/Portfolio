@@ -16,9 +16,10 @@ const STELES: {
   height: number;
   color: string;
 }[] = [
-  { position: [-2.05, 0, 0.3], rotY: 0.18, height: 3.35, color: "#1b322e" },
-  { position: [0, 0, -0.35], rotY: -0.03, height: 4.05, color: "#2d261c" },
-  { position: [2.05, 0, 0.22], rotY: -0.2, height: 3.2, color: "#1c2624" },
+  { position: [-2.7, 0, 0.22], rotY: 0.2, height: 3.15, color: "#1b322e" },
+  { position: [-0.9, 0, -0.28], rotY: 0.06, height: 3.85, color: "#2d261c" },
+  { position: [0.9, 0, -0.32], rotY: -0.08, height: 3.55, color: "#1c2624" },
+  { position: [2.7, 0, 0.18], rotY: -0.22, height: 3.2, color: "#2a1c16" },
 ];
 
 function Rig() {
@@ -123,7 +124,7 @@ export default function WorkIndexScene() {
 
   return (
     <Canvas
-      camera={{ position: [0, 0.5, 7.4], fov: 36 }}
+      camera={{ position: [0, 0.5, 8.2], fov: 38 }}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       style={{ width: "100%", height: "100%", display: "block" }}

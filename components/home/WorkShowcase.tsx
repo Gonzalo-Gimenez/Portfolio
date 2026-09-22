@@ -33,7 +33,7 @@ function WorkCopy({ work }: { work: WorkItem }) {
 }
 
 export function WorkShowcase() {
-  const [insight, energia, flota] = WORKS;
+  const [insight, energia, flota, autostock] = WORKS;
 
   return (
     <div>
@@ -84,6 +84,25 @@ export function WorkShowcase() {
         <div className="relative z-10 flex min-h-[88dvh] items-end px-5 py-12 sm:px-8 sm:py-16">
           <div className="mx-auto w-full max-w-6xl">
             <WorkCopy work={flota} />
+          </div>
+        </div>
+      </Link>
+
+      <Link
+        href={`/trabajo/${autostock.slug}`}
+        className="group grid overflow-hidden border-t border-[var(--border)] lg:grid-cols-2"
+      >
+        <div className="relative min-h-[52dvh] order-2 lg:order-1 lg:min-h-[88dvh]">
+          <CoverMedia
+            src={autostock.coverPath}
+            alt="Flota AutoStock — autos en portada"
+            motion="rise"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+        </div>
+        <div className="flex flex-col justify-center px-5 py-14 order-1 sm:px-8 sm:py-20 lg:order-2">
+          <div className="mx-auto w-full max-w-xl">
+            <WorkCopy work={autostock} />
           </div>
         </div>
       </Link>
