@@ -25,6 +25,6 @@ export const SITE = {
   aboutLead: "Producto, código y contexto real en la misma estrategia.",
   aboutParagraphs: [
     "Entiendo el problema, diseño la experiencia y lo llevo a código. No construyo pantallas sueltas. Construyo sistemas alrededor de operaciones reales.",
-    "Entrelazo negocio, mercado, datos e inteligencia. Combino ejecución técnica, criterio de producto y lectura del negocio. También hago automatizaciones que entran en el trabajo de todos los días.",
+    "Entrelazo negocio, mercado, datos e inteligencia. Combino ejecución técnica, criterio de producto y lectura del negocio.",
   ],
 } as const;

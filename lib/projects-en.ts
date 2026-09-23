@@ -48,10 +48,10 @@ export const WORKS_EN: Record<WorkSlug, WorkCopy> = {
       "Pipeline: CSV to PostgreSQL staging to facts and a fleet_status_snapshot view per unit and branch.",
     why: "A Data Engineer project on a vehicle-management fleet. The craft is data engineering: validate movements and units, reject duplicates and invalid enums, and deliver a per-vehicle state that reporting can consume.",
     architecture:
-      "CSV of movements and units to Python validation to PostgreSQL staging to fact SQL and a fleet_status_snapshot view. Idempotent run_pipeline.py job for cron or Compose. Integration tests against Postgres in Docker (port 5434).",
+      "CSV of movements and units to Python validation to PostgreSQL staging to fact SQL and a fleet_status_snapshot view. Automation: idempotent run_pipeline.py job for cron or Compose. Integration tests against Postgres in Docker (port 5434).",
     highlights: [
       "Enum and duplicate-ID validation; a rejected CSV example in the repo.",
-      "Idempotent job with auditable counts and the fleet_status_snapshot view.",
+      "Pipeline automation: idempotent job for cron or Compose, with auditable counts.",
       "Data layer (AutoStock-Data). Not the AutoStock management platform.",
     ],
   },
@@ -76,10 +76,10 @@ export const WORKS_EN: Record<WorkSlug, WorkCopy> = {
       "Platform to follow cattle with an IoT collar: location, status, and ranch operations.",
     why: "Agroblock is a livestock agtech ecosystem. The IoT collar goes to the field; the platform concentrates traceability, alerts, and herd operations. The product landing is at www.agroblock.com.ar.",
     architecture:
-      "IoT collar on the animal, telemetry into the platform, and screens for the producer. The focus is the full cycle: field, data, and decision. The public landing is at www.agroblock.com.ar.",
+      "IoT collar on the animal, telemetry into the platform, and screens for the producer. Alerts come from the collar data: automations that land in the ranch's everyday work. The public landing is at www.agroblock.com.ar.",
     highlights: [
       "IoT collar as the source of truth for the animal in the field.",
-      "Herd management platform: location, status, and tracking.",
+      "Alert automations on the herd, driven by the collar.",
       "End-to-end ecosystem: hardware on the animal and software on the ranch.",
     ],
   },

@@ -89,11 +89,11 @@ export const WORKS: WorkItem[] = [
       "Pipeline: CSV → staging PostgreSQL → hechos y vista fleet_status_snapshot por unidad y sucursal.",
     why: "Es un proyecto de Data Engineer sobre una flota de gestión vehicular. El oficio es el de ingeniería de datos: validar movimientos y unidades, rechazar duplicados y enums inválidos, y entregar un estado por vehículo que reporting pueda consumir.",
     architecture:
-      "CSV de movimientos y unidades → validación en Python → staging en PostgreSQL → SQL de hechos y vista `fleet_status_snapshot`. Job `run_pipeline.py` (idempotente) para cron o Compose. Tests de integración contra Postgres en Docker (puerto 5434).",
+      "CSV de movimientos y unidades → validación en Python → staging en PostgreSQL → SQL de hechos y vista `fleet_status_snapshot`. Automatización: job `run_pipeline.py` (idempotente) para cron o Compose. Tests de integración contra Postgres en Docker (puerto 5434).",
     stack: ["Python", "PostgreSQL", "SQL", "Docker Compose"],
     highlights: [
       "Validación de enums e IDs duplicados; CSV rechazado de ejemplo en el repo.",
-      "Job idempotente con conteos auditables y vista fleet_status_snapshot.",
+      "Automatización del pipeline: job idempotente para cron o Compose, con conteos auditables.",
       "Capa de datos (AutoStock-Data); no es la plataforma de gestión AutoStock.",
     ],
     coverPath: "/covers/cover-flota.png",
@@ -137,11 +137,11 @@ export const WORKS: WorkItem[] = [
       "Plataforma para seguir el ganado con collar IoT: ubicación, estado y operación del establecimiento.",
     why: "Agroblock es un ecosistema agtech de ganado. El collar IoT sale al campo; la plataforma concentra trazabilidad, alertas y la operación del rodeo. La landing del producto está en www.agroblock.com.ar.",
     architecture:
-      "Collar IoT en el animal, telemetría hacia la plataforma y pantallas para el productor. El foco es el ciclo completo: campo, dato y decisión. El front público de la landing se ve en www.agroblock.com.ar.",
+      "Collar IoT en el animal, telemetría hacia la plataforma y pantallas para el productor. Las alertas salen del dato del collar: automatizaciones que entran en el día a día del establecimiento. El front público de la landing se ve en www.agroblock.com.ar.",
     stack: ["IoT", "Next.js", "Node.js", "PostgreSQL"],
     highlights: [
       "Collar IoT como fuente de verdad del animal en el campo.",
-      "Plataforma de gestión del rodeo: ubicación, estado y seguimiento.",
+      "Automatizaciones de alerta sobre el rodeo, a partir del collar.",
       "Ecosistema de punta a punta: hardware en el animal y software en el establecimiento.",
     ],
     coverPath: "/covers/cover-agroblock.png",

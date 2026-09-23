@@ -32,14 +32,14 @@ export const UI = {
     aboutLead: "Producto, código y contexto real en la misma estrategia.",
     aboutParagraphs: [
       "Entiendo el problema, diseño la experiencia y lo llevo a código. No construyo pantallas sueltas. Construyo sistemas alrededor de operaciones reales.",
-      "Entrelazo negocio, mercado, datos e inteligencia. Combino ejecución técnica, criterio de producto y lectura del negocio. También hago automatizaciones que entran en el trabajo de todos los días.",
+      "Entrelazo negocio, mercado, datos e inteligencia. Combino ejecución técnica, criterio de producto y lectura del negocio.",
     ],
     education:
       "Tecnicatura Superior en Desarrollo de Software, IFTS 11. Cursando Licenciatura en Ciencia de Datos en la Universidad de la Ciudad de Buenos Aires.",
     languages: "Inglés intermedio",
     skillsTitle: "Habilidades",
     skillsLead:
-      "Stack de software, datos e IA aplicada. Lo que uso para anclar respuestas a hechos, analizar y mover pipelines.",
+      "Stack de software, datos e IA aplicada. Lo que uso para anclar respuestas a hechos, analizar y mover información en cada contexto.",
     contactTitle: "Hablemos",
     contactLead:
       "Si buscás un AI Engineer, Data Analyst o Data Engineer, escribime.",
@@ -91,14 +91,14 @@ export const UI = {
     aboutLead: "Product, code, and real context in the same strategy.",
     aboutParagraphs: [
       "I understand the problem, design the experience, and ship it in code. I don't build disconnected screens. I build systems around real operations.",
-      "I connect business, market, data, and intelligence. I combine technical execution, product judgment, and business reading. I also build automations that land in everyday work.",
+      "I connect business, market, data, and intelligence. I combine technical execution, product judgment, and business reading.",
     ],
     education:
       "Advanced technician in Software Development, IFTS 11. Studying a Bachelor's in Data Science at Universidad de la Ciudad de Buenos Aires.",
     languages: "Intermediate English",
     skillsTitle: "Skills",
     skillsLead:
-      "Software, data, and applied AI. What I use to ground answers in facts, analyze, and move pipelines.",
+      "Software, data, and applied AI stack. What I use to ground answers in facts, analyze, and move information in each context.",
     contactTitle: "Let's talk",
     contactLead:
       "If you are looking for an AI Engineer, Data Analyst, or Data Engineer, write me.",
