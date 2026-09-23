@@ -60,6 +60,7 @@ const WORK_COUNT = WORKS.length;
 
 export function CoverflowGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
   const webgl = useWebGLAvailable();
   const use3D = webgl === true && !reducedMotion;
@@ -72,6 +73,12 @@ export function CoverflowGallery() {
   const goNext = useCallback(() => {
     setActiveIndex((i) => (i + 1) % WORK_COUNT);
   }, []);
+
+  useEffect(() => {
+    if (!use3D || paused) return;
+    const id = window.setInterval(goNext, 4200);
+    return () => window.clearInterval(id);
+  }, [use3D, paused, goNext, activeIndex]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -97,6 +104,7 @@ export function CoverflowGallery() {
   const onPointerDown = (e: PointerEvent) => {
     if (e.button !== 0) return;
     dragStart.current = { x: e.clientX, y: e.clientY };
+    setPaused(true);
   };
 
   const finishDrag = (clientX: number, clientY: number) => {
@@ -104,6 +112,7 @@ export function CoverflowGallery() {
     const dx = clientX - dragStart.current.x;
     const dy = clientY - dragStart.current.y;
     dragStart.current = null;
+    setPaused(false);
     if (Math.abs(dx) < 56) return;
     if (Math.abs(dy) >= Math.abs(dx) * 0.7) return;
     if (dx > 0) goPrev();
@@ -112,7 +121,11 @@ export function CoverflowGallery() {
 
   return (
     <section id="proyectos" className="scroll-mt-16" aria-label="Proyectos">
-      <div className="relative">
+      <div
+        className="relative"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <CenterRule />
           <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
