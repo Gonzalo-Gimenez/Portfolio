@@ -1,4 +1,11 @@
-export type WorkSlug = "insightai" | "energia" | "flota" | "autostock-ai";
+export type WorkSlug =
+  | "insightai"
+  | "energia"
+  | "flota"
+  | "autostock-ai"
+  | "agroblock"
+  | "perkis"
+  | "cinemaland";
 
 export type WorkStatus = "shipped" | "proximo";
 
@@ -115,6 +122,66 @@ export const WORKS: WorkItem[] = [
     ],
     coverPath: "/covers/cover-autostock-ai.png",
     repoUrl: "https://github.com/Gonzalo-Gimenez/AutoStock-AI",
+  },
+  {
+    slug: "agroblock",
+    title: "Agroblock",
+    roleLabel: "AgTech",
+    status: "shipped",
+    tagline:
+      "Ecosistema agtech de ganado: collares IoT, trazabilidad y gestión del rodeo en el campo.",
+    summary:
+      "Plataforma para seguir el ganado con collar IoT: ubicación, estado y operación del establecimiento.",
+    why: "Agroblock es un ecosistema agtech de ganado. El collar IoT sale al campo; la plataforma concentra trazabilidad, alertas y la operación del rodeo.",
+    architecture:
+      "Collar IoT en el animal, telemetría hacia la plataforma y pantallas para el productor. El foco es el ciclo completo: campo, dato y decisión.",
+    stack: ["IoT", "Next.js", "Node.js", "PostgreSQL"],
+    highlights: [
+      "Collar IoT como fuente de verdad del animal en el campo.",
+      "Plataforma de gestión del rodeo: ubicación, estado y seguimiento.",
+      "Ecosistema de punta a punta: hardware en el animal y software en el establecimiento.",
+    ],
+    coverPath: "/covers/cover-agroblock.png",
+  },
+  {
+    slug: "perkis",
+    title: "Perkis",
+    roleLabel: "Mobile",
+    status: "shipped",
+    tagline:
+      "Aplicación mobile Perkis: producto nativo para usar en el teléfono, de punta a punta.",
+    summary:
+      "App mobile (React Native) pensada para el uso diario en el celular.",
+    why: "Perkis es una aplicación mobile. El caso muestra el producto en el teléfono: flujos, pantallas y el ciclo de una app nativa.",
+    architecture:
+      "Cliente mobile con React Native. El backend queda del lado del producto; acá se presenta la app y su alcance en el celular.",
+    stack: ["React Native", "TypeScript", "APIs REST"],
+    highlights: [
+      "Producto mobile, no un mock de landing.",
+      "Flujos pensados para uso con una mano en el teléfono.",
+      "Pantallas y ciclo de una app que se usa todos los días.",
+    ],
+    coverPath: "/covers/cover-perkis.png",
+  },
+  {
+    slug: "cinemaland",
+    title: "Cinemaland",
+    roleLabel: "Full stack",
+    status: "shipped",
+    tagline:
+      "Plataforma de cine: frontend y backend para cartelera, funciones y la operación de la sala.",
+    summary:
+      "Frontend y backend de Cinemaland: cartelera, funciones y la lógica de una plataforma de cine.",
+    why: "Cinemaland es una plataforma de cine con frontend y backend. El caso cubre cartelera, funciones y la API que las sostiene.",
+    architecture:
+      "Frontend de cartelera y flujo de usuario; backend con API REST para películas, funciones y la operación de la sala.",
+    stack: ["React", "Node.js", "APIs REST", "PostgreSQL"],
+    highlights: [
+      "Frontend y backend del mismo producto.",
+      "Cartelera y funciones como dominio, no un CRUD genérico.",
+      "API REST para películas, horarios y la operación de la sala.",
+    ],
+    coverPath: "/covers/cover-cinemaland.png",
   },
 ];
 

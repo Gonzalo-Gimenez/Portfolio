@@ -5,8 +5,8 @@ import {
   Translate,
 } from "@phosphor-icons/react/dist/ssr";
 
-import { CenterRule } from "@/components/layout/SectionMark";
 import { SITE } from "@/lib/site";
+import { CenterRule } from "@/components/layout/SectionMark";
 
 const FACTS = [
   {
@@ -25,27 +25,39 @@ const FACTS = [
 
 export function HomeAbout() {
   return (
-    <section id="sobre-mi" className="scroll-mt-16 px-5 pb-20 sm:px-8 sm:pb-28">
-      <div className="mx-auto max-w-6xl">
+    <section id="sobre-mi" className="scroll-mt-16 pb-20 sm:pb-28">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <CenterRule />
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-start">
-          <div className="relative mx-auto w-full max-w-xs lg:mx-0">
-            <Image
-              src={SITE.photoPath}
-              alt={`Retrato de ${SITE.name}`}
-              width={400}
-              height={500}
-              className="aspect-[4/5] w-full object-cover object-[center_18%]"
-            />
-          </div>
-          <div>
+      </div>
+      <div className="relative min-h-[36rem] overflow-hidden sm:min-h-[42rem]">
+        <Image
+          src={SITE.aboutImagePath}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+          priority={false}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,19,24,0.94)_0%,rgba(16,19,24,0.78)_42%,rgba(16,19,24,0.28)_72%,rgba(16,19,24,0.12)_100%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,19,24,0.35)_0%,transparent_22%,transparent_78%,rgba(16,19,24,0.72)_100%)]"
+        />
+        <div className="relative z-10 mx-auto flex min-h-[36rem] max-w-6xl items-end px-5 py-16 sm:min-h-[42rem] sm:px-8 sm:py-24">
+          <div className="max-w-[40rem]">
             <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
               {SITE.manifesto}
             </h2>
-            <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-[var(--text-secondary)]">
+            <p className="mt-6 text-lg leading-relaxed text-[var(--text-primary)] sm:text-xl">
+              {SITE.aboutLead}
+            </p>
+            <p className="mt-4 max-w-[52ch] text-base leading-relaxed text-[var(--text-secondary)]">
               {SITE.about}
             </p>
-            <ul className="mt-8 max-w-[52ch] space-y-3 text-sm leading-relaxed text-[var(--text-muted)]">
+            <ul className="mt-8 max-w-[52ch] space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
               {FACTS.map((fact) => (
                 <li key={fact.label} className="flex items-start gap-2.5">
                   <fact.icon

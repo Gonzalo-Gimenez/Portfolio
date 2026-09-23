@@ -16,10 +16,14 @@ export const SITE = {
   cvPath: "/cv/CV_Gonzalo_Gimenez.pdf",
   photoPath: "/perfil-camisa.jpg",
   coverPath: "/portada.jpg",
+  logoPath: "/logo-gg.png",
+  aboutImagePath: "/about-systems.jpg",
   education:
     "Tecnicatura Superior en Desarrollo de Software, IFTS 11. Cursando Licenciatura en Ciencia de Datos en la Universidad de la Ciudad de Buenos Aires.",
   languages: "Inglés intermedio.",
   manifesto: "Sobre mí",
+  aboutLead:
+    "No construyo pantallas sueltas. Construyo sistemas alrededor de operaciones reales.",
   about:
-    "AI Engineer, Data Analyst y Data Engineer, con formación técnica en desarrollo de software y estudiante de Ciencia de Datos. Programación, bases, SQL, frontend y backend, Python, APIs, automatización e inteligencia artificial. El modelo no inventa cifras: consulta herramientas y SQL antes de responder.",
+    "Comprendo y entrelazo negocio, mercado, datos e inteligencia conectados. Combino ejecución técnica, criterio de producto y lectura del negocio — con automatizaciones que entran en el trabajo de todos los días.",
 } as const;

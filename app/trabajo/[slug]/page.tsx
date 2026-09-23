@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CaseStudyBody } from "@/components/case-study/CaseStudyBody";
-import { SiteNav } from "@/components/nav/SiteNav";
 import { getWork, WORK_SLUGS } from "@/lib/projects";
 import { SITE } from "@/lib/site";
 
@@ -32,9 +31,6 @@ export default async function TrabajoPage({ params }: PageProps) {
   if (!work) notFound();
 
   return (
-    <>
-      <SiteNav />
-      <CaseStudyBody work={work} />
-    </>
+    <CaseStudyBody work={work} />
   );
 }

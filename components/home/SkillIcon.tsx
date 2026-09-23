@@ -19,6 +19,7 @@ import SiThreedotjs from "@icons-pack/react-simple-icons/icons/SiThreedotjs";
 import SiTypescript from "@icons-pack/react-simple-icons/icons/SiTypescript";
 import {
   Brain,
+  Broadcast,
   ChartBar,
   ChatTeardropText,
   Cloud,
@@ -67,6 +68,7 @@ const ICONS: Record<string, Glyph> = {
   groq: Lightning,
   "three.js": SiThreedotjs,
   duckdb: SiDuckdb,
+  iot: Broadcast,
 };
 
 function lookupKey(name: string) {

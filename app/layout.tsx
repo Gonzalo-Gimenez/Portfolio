@@ -4,6 +4,7 @@ import { Syne } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/site";
 import { StarField } from "@/components/fx/StarField";
+import { SiteNav } from "@/components/nav/SiteNav";
 
 const display = Syne({
   variable: "--font-display",
@@ -38,6 +39,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <StarField />
+        <SiteNav />
         <div className="relative z-10">{children}</div>
       </body>
     </html>

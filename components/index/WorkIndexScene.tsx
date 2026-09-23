@@ -10,17 +10,31 @@ import type { Group } from "three";
 import { DataField } from "@/components/index/DataField";
 import { WORKS, type WorkItem } from "@/lib/projects";
 
-const STELES: {
-  position: [number, number, number];
-  rotY: number;
-  height: number;
-  color: string;
-}[] = [
-  { position: [-2.7, 0, 0.22], rotY: 0.2, height: 3.15, color: "#1b322e" },
-  { position: [-0.9, 0, -0.28], rotY: 0.06, height: 3.85, color: "#2d261c" },
-  { position: [0.9, 0, -0.32], rotY: -0.08, height: 3.55, color: "#1c2624" },
-  { position: [2.7, 0, 0.18], rotY: -0.22, height: 3.2, color: "#2a1c16" },
+const STELE_COLORS = [
+  "#1b322e",
+  "#2d261c",
+  "#1c2624",
+  "#2a1c16",
+  "#1a2830",
+  "#241c28",
+  "#1c2420",
 ];
+
+const STELES = WORKS.map((_, i) => {
+  const count = WORKS.length;
+  const t = count === 1 ? 0.5 : i / (count - 1);
+  const span = Math.min(9.2, 1.32 * (count - 1));
+  return {
+    position: [
+      -span / 2 + t * span,
+      0,
+      Math.sin(t * Math.PI) * -0.58,
+    ] as [number, number, number],
+    rotY: (0.5 - t) * 0.38,
+    height: 3.05 + ((i * 17) % 9) * 0.08,
+    color: STELE_COLORS[i % STELE_COLORS.length],
+  };
+});
 
 function Rig() {
   useFrame((state) => {
@@ -56,12 +70,13 @@ function WorkStele({
   const group = useRef<Group>(null);
   const [hovered, setHovered] = useState(false);
   const stele = STELES[index];
+  const height = stele?.height ?? 3.2;
   const target = useMemo(
     () => ({
-      y: stele.height / 2 - 1.62,
+      y: height / 2 - 1.62,
       scale: hovered ? 1.045 : 1,
     }),
-    [hovered, stele.height],
+    [hovered, height],
   );
 
   useEffect(() => {
@@ -86,11 +101,11 @@ function WorkStele({
   return (
     <group
       ref={group}
-      position={[stele.position[0], target.y, stele.position[2]]}
-      rotation={[0, stele.rotY, 0]}
+      position={[stele?.position[0] ?? 0, target.y, stele?.position[2] ?? 0]}
+      rotation={[0, stele?.rotY ?? 0, 0]}
     >
       <RoundedBox
-        args={[1.72, stele.height, 0.2]}
+        args={[1.72, stele?.height ?? 3.2, 0.2]}
         radius={0.03}
         smoothness={4}
         onClick={() => router.push(`/trabajo/${work.slug}`)}
@@ -106,7 +121,7 @@ function WorkStele({
         }}
       >
         <meshStandardMaterial
-          color={stele.color}
+          color={stele?.color ?? "#1c2624"}
           roughness={0.32}
           metalness={0.45}
           emissive={hovered ? "#6ec8ff" : "#0b1016"}
@@ -124,7 +139,7 @@ export default function WorkIndexScene() {
 
   return (
     <Canvas
-      camera={{ position: [0, 0.5, 8.2], fov: 38 }}
+      camera={{ position: [0, 0.55, 10.6], fov: 40 }}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       style={{ width: "100%", height: "100%", display: "block" }}

@@ -26,6 +26,7 @@ const CoverflowScene = dynamic(() => import("./CoverflowScene"), {
 
 function ProjectHud({ activeIndex }: { activeIndex: number }) {
   const work = WORKS[activeIndex];
+  if (!work) return null;
 
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4 text-center">
@@ -50,26 +51,6 @@ function ProjectHud({ activeIndex }: { activeIndex: number }) {
         >
           Ver caso
         </Link>
-        {work.demoUrl ? (
-          <a
-            href={work.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--text-primary)]"
-          >
-            Demo
-          </a>
-        ) : null}
-        {work.repoUrl ? (
-          <a
-            href={work.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex rounded-full border border-[var(--border)] px-5 py-2.5 text-sm text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--text-primary)]"
-          >
-            GitHub
-          </a>
-        ) : null}
       </div>
     </div>
   );
@@ -140,12 +121,12 @@ export function CoverflowGallery() {
         </div>
 
         {webgl === null ? (
-          <div className="flex h-[34rem] items-center justify-center text-sm text-[var(--text-muted)] sm:h-[40rem]">
+          <div className="mt-8 flex h-[38rem] items-center justify-center text-sm text-[var(--text-muted)] sm:mt-10 sm:h-[44rem]">
             Preparando galería
           </div>
         ) : use3D ? (
           <div
-            className="relative h-[34rem] w-full touch-pan-y sm:h-[40rem]"
+            className="relative mt-8 h-[40rem] w-full touch-pan-y sm:mt-10 sm:h-[46rem] [mask-image:linear-gradient(to_bottom,#000_0%,#000_82%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,#000_0%,#000_82%,transparent_100%)]"
             onPointerDown={onPointerDown}
             onPointerUp={(e) => finishDrag(e.clientX, e.clientY)}
             onPointerCancel={() => {
@@ -168,7 +149,7 @@ export function CoverflowGallery() {
           </div>
         )}
 
-        <div className="flex justify-center gap-6 pb-6">
+        <div className="relative z-10 -mt-16 flex justify-center gap-16 pb-8 sm:-mt-20 sm:gap-24">
           <button
             type="button"
             onClick={goPrev}
@@ -187,7 +168,7 @@ export function CoverflowGallery() {
           </button>
         </div>
 
-        <div className="px-5 pb-20 pt-2 sm:px-8 sm:pb-28">
+        <div className="px-5 pb-20 pt-6 sm:px-8 sm:pb-28 sm:pt-8">
           <ProjectHud activeIndex={activeIndex} />
         </div>
       </div>

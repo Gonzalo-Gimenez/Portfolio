@@ -11,8 +11,8 @@ import { WORKS, type WorkItem } from "@/lib/projects";
 import { usePrefersReducedMotion } from "@/lib/hooks/use-media";
 
 const COUNT = WORKS.length;
-const CARD_W = 4.4;
-const CARD_H = 2.48;
+const CARD_W = 3.85;
+const CARD_H = 2.42;
 const FRAME_W = CARD_W + 0.08;
 const FRAME_H = CARD_H + 0.08;
 const FRAME_CORE = 0.01;
@@ -22,15 +22,33 @@ const FRAME_RADIUS = 0.008;
 const XENON_WHITE = "#fff8fb";
 const XENON_ROSE = "#ffd9e8";
 
-const SLOTS = [
-  { x: 0, y: 0, z: 0.55, rotY: 0, scale: 1.18 },
-  { x: 3.05, y: 0, z: -1.05, rotY: -0.58, scale: 0.78 },
-  { x: 0, y: 0, z: -2.45, rotY: 0, scale: 0.52 },
-  { x: -3.05, y: 0, z: -1.05, rotY: 0.58, scale: 0.78 },
-] as const;
+type Slot = {
+  x: number;
+  y: number;
+  z: number;
+  rotY: number;
+  scale: number;
+};
 
-function relativeSlot(cardIndex: number, activeIndex: number): number {
-  return (cardIndex - activeIndex + COUNT) % COUNT;
+function signedOffset(cardIndex: number, activeIndex: number): number {
+  let delta = cardIndex - activeIndex;
+  const half = Math.floor(COUNT / 2);
+  if (delta > half) delta -= COUNT;
+  if (delta < -half) delta += COUNT;
+  return delta;
+}
+
+function slotFromOffset(offset: number): Slot {
+  const abs = Math.abs(offset);
+  const theta = offset * 0.42;
+  const radius = 5.05;
+  return {
+    x: Math.sin(theta) * radius,
+    y: 0.42,
+    z: -(1 - Math.cos(theta)) * 2.85 + (abs === 0 ? 0.55 : 0),
+    rotY: -theta * 0.9,
+    scale: abs === 0 ? 1.08 : Math.max(0.4, 0.84 - abs * 0.12),
+  };
 }
 
 function roundedRectPath(
@@ -76,7 +94,7 @@ function XenonFrame({
     const path = roundedRectPath(FRAME_W, FRAME_H, FRAME_RADIUS);
     return {
       coreGeo: new THREE.TubeGeometry(path, 220, FRAME_CORE, 10, true),
-      haloGeo: new THREE.TubeGeometry(path, 220, 0.026, 10, true),
+      haloGeo: new THREE.TubeGeometry(path, 220, 0.028, 10, true),
     };
   }, []);
 
@@ -116,8 +134,8 @@ function XenonFrame({
   );
 }
 
-let haloTexture: THREE.CanvasTexture | null = null;
 let frameGlowTextureSoft: THREE.CanvasTexture | null = null;
+let platformGlowTexture: THREE.CanvasTexture | null = null;
 
 function roundRectPath(
   ctx: CanvasRenderingContext2D,
@@ -185,75 +203,6 @@ function getFrameGlowTexture() {
   return frameGlowTextureSoft;
 }
 
-function getHaloTexture() {
-  if (haloTexture) return haloTexture;
-  const size = 512;
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    haloTexture = new THREE.CanvasTexture(canvas);
-    return haloTexture;
-  }
-
-  const cx = size / 2;
-  const cy = size / 2;
-  const radius = size * 0.24;
-
-  ctx.clearRect(0, 0, size, size);
-
-  const bloom = ctx.createRadialGradient(
-    cx,
-    cy,
-    radius * 0.35,
-    cx,
-    cy,
-    size * 0.48,
-  );
-  bloom.addColorStop(0, "rgba(255, 255, 255, 0)");
-  bloom.addColorStop(0.38, "rgba(255, 248, 252, 0)");
-  bloom.addColorStop(0.52, "rgba(255, 236, 244, 0.2)");
-  bloom.addColorStop(0.6, "rgba(255, 246, 250, 0.42)");
-  bloom.addColorStop(0.7, "rgba(255, 228, 238, 0.16)");
-  bloom.addColorStop(0.86, "rgba(255, 255, 255, 0)");
-  bloom.addColorStop(1, "rgba(255, 255, 255, 0)");
-  ctx.fillStyle = bloom;
-  ctx.fillRect(0, 0, size, size);
-
-  ctx.save();
-  ctx.shadowColor = "rgba(255, 214, 230, 0.9)";
-  ctx.shadowBlur = 28;
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(255, 232, 240, 0.55)";
-  ctx.lineWidth = 18;
-  ctx.stroke();
-
-  ctx.shadowColor = "#ffffff";
-  ctx.shadowBlur = 14;
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(255, 252, 254, 0.95)";
-  ctx.lineWidth = 4.5;
-  ctx.stroke();
-
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, -0.5, 0.5);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, Math.PI - 0.5, Math.PI + 0.5);
-  ctx.stroke();
-  ctx.restore();
-
-  haloTexture = new THREE.CanvasTexture(canvas);
-  haloTexture.colorSpace = THREE.SRGBColorSpace;
-  haloTexture.needsUpdate = true;
-  return haloTexture;
-}
-
 function FrameGlow({
   strength,
   reduced,
@@ -289,51 +238,98 @@ function FrameGlow({
   );
 }
 
-function BottomWash({
+function getPlatformGlowTexture() {
+  if (platformGlowTexture) return platformGlowTexture;
+  const size = 512;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    platformGlowTexture = new THREE.CanvasTexture(canvas);
+    return platformGlowTexture;
+  }
+
+  const cx = size / 2;
+  const cy = size / 2;
+  ctx.clearRect(0, 0, size, size);
+
+  const bloom = ctx.createRadialGradient(cx, cy, 4, cx, cy, size * 0.5);
+  bloom.addColorStop(0, "rgba(255, 252, 255, 0.38)");
+  bloom.addColorStop(0.12, "rgba(186, 232, 255, 0.22)");
+  bloom.addColorStop(0.32, "rgba(122, 200, 255, 0.1)");
+  bloom.addColorStop(0.55, "rgba(80, 170, 230, 0.04)");
+  bloom.addColorStop(1, "rgba(0, 0, 0, 0)");
+  ctx.fillStyle = bloom;
+  ctx.fillRect(0, 0, size, size);
+
+  platformGlowTexture = new THREE.CanvasTexture(canvas);
+  platformGlowTexture.colorSpace = THREE.SRGBColorSpace;
+  platformGlowTexture.needsUpdate = true;
+  return platformGlowTexture;
+}
+
+function PlatformBase({
   strength,
   reduced,
 }: {
   strength: number;
   reduced: boolean;
 }) {
-  const mat = useRef<THREE.MeshBasicMaterial>(null);
-  const texture = useMemo(() => getHaloTexture(), []);
+  const wash = useRef<THREE.MeshBasicMaterial>(null);
+  const glow = useRef<THREE.MeshBasicMaterial>(null);
+  const glowMap = useMemo(() => getPlatformGlowTexture(), []);
+  const y = -CARD_H / 2 - 0.38;
 
   useFrame(({ clock }) => {
-    if (!mat.current) return;
     const pulse = reduced
-      ? 0.62
-      : 0.5 + Math.sin(clock.elapsedTime * 1.2) * 0.12;
-    mat.current.opacity = pulse * strength;
+      ? 0.72
+      : 0.64 + Math.sin(clock.elapsedTime * 0.85) * 0.08;
+    const k = pulse * strength;
+    if (wash.current) wash.current.opacity = 0.38 * k;
+    if (glow.current) glow.current.opacity = 0.28 * k;
   });
 
   return (
-    <>
+    <group position={[0, y, 0.06]}>
       <pointLight
-        position={[0, -FRAME_H / 2 - 0.22, 0.1]}
-        intensity={1.15 * strength}
-        color="#fff5f8"
-        distance={1.7}
+        position={[0, 0.18, 0.1]}
+        intensity={0.55 * strength}
+        color="#d7f3ff"
+        distance={3.4}
         decay={2}
       />
       <mesh
-        position={[0, -FRAME_H / 2 - 0.16, -0.02]}
-        rotation={[-Math.PI / 2 + 0.16, 0, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, -0.02, 0]}
         raycast={() => null}
       >
-        <planeGeometry args={[CARD_W * 1.06, CARD_W * 0.36]} />
+        <planeGeometry args={[CARD_W * 3.4, CARD_W * 2.4]} />
         <meshBasicMaterial
-          ref={mat}
-          map={texture}
+          ref={wash}
+          map={glowMap}
           transparent
-          opacity={0.58}
+          opacity={0.35}
           depthWrite={false}
           toneMapped={false}
           blending={THREE.AdditiveBlending}
           side={THREE.DoubleSide}
         />
       </mesh>
-    </>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} raycast={() => null}>
+        <planeGeometry args={[CARD_W * 2.1, CARD_W * 1.55]} />
+        <meshBasicMaterial
+          ref={glow}
+          map={glowMap}
+          transparent
+          opacity={0.26}
+          depthWrite={false}
+          toneMapped={false}
+          blending={THREE.AdditiveBlending}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+    </group>
   );
 }
 
@@ -356,12 +352,16 @@ function ProjectCard({
   const group = useRef<Group>(null);
   const [hovered, setHovered] = useState(false);
   const texture = textures[cardIndex];
-  const rel = relativeSlot(cardIndex, activeIndex);
-  const isFront = rel === 0;
-  const slot = SLOTS[rel] ?? SLOTS[0];
+  const offset = signedOffset(cardIndex, activeIndex);
+  const isFront = offset === 0;
+  const slot = slotFromOffset(offset);
   const targetPos = useRef(new THREE.Vector3(slot.x, slot.y, slot.z));
   const rimStrength = isFront ? 1 : hovered ? 0.85 : 0.45;
-  const washStrength = isFront ? 1 : hovered ? 0.7 : 0.4;
+  const platformStrength = isFront
+    ? 1
+    : hovered
+      ? 0.45
+      : Math.max(0.12, 0.28 - Math.abs(offset) * 0.06);
 
   useEffect(() => {
     return () => {
@@ -378,7 +378,7 @@ function ProjectCard({
       slot.rotY,
       0.14,
     );
-    const hoverBoost = hovered ? (isFront ? 1.03 : 1.14) : 1;
+    const hoverBoost = hovered ? (isFront ? 1.03 : 1.1) : 1;
     const s = THREE.MathUtils.lerp(
       group.current.scale.x,
       slot.scale * hoverBoost,
@@ -409,7 +409,7 @@ function ProjectCard({
 
   return (
     <group ref={group}>
-      <BottomWash strength={washStrength} reduced={reduced} />
+      <PlatformBase strength={platformStrength} reduced={reduced} />
       <FrameGlow strength={rimStrength} reduced={reduced} />
       <mesh position={[0, 0, -0.02]} raycast={() => null}>
         <planeGeometry args={[FRAME_W, FRAME_H]} />
@@ -458,7 +458,7 @@ function CoverflowRig({
 
   return (
     <>
-      <fog attach="fog" args={["#0c0f11", 14, 28]} />
+      <fog attach="fog" args={["#101318", 14, 26]} />
       <ambientLight intensity={0.38} />
       <directionalLight position={[4, 5, 6]} intensity={1.2} />
       <spotLight
@@ -496,7 +496,7 @@ export default function CoverflowScene({
   return (
     <div ref={wrap} className="absolute inset-0">
       <Canvas
-        camera={{ position: [0, 0.05, 7.6], fov: 34 }}
+        camera={{ position: [0, 0.28, 8.35], fov: 34 }}
         dpr={[1, 1.75]}
         gl={{
           antialias: true,

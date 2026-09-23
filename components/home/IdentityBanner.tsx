@@ -6,21 +6,21 @@ import { SITE } from "@/lib/site";
 export function IdentityBanner() {
   return (
     <section className="relative">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <div className="flex items-start gap-5 sm:gap-8">
+      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+        <div className="flex items-center gap-6 sm:gap-10 lg:gap-14">
           <Image
             src={SITE.photoPath}
             alt={`Retrato de ${SITE.name}`}
-            width={280}
-            height={360}
+            width={420}
+            height={540}
             priority
-            className="aspect-[3/4] w-24 shrink-0 object-cover object-[center_18%] sm:w-36 lg:w-40"
+            className="aspect-[3/4] w-40 shrink-0 object-cover object-[center_18%] sm:w-56 lg:w-72"
           />
           <div className="min-w-0">
-            <h1 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
+            <h1 className="text-[clamp(2.4rem,5.4vw,4.35rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
               {SITE.firstName} {SITE.lastName}
             </h1>
-            <p className="xenon-text mt-3 text-lg leading-snug sm:text-xl">
+            <p className="xenon-text mt-4 text-lg leading-snug sm:text-xl">
               {SITE.roles}
             </p>
             <p className="mt-1.5 text-lg text-[var(--text-secondary)] sm:text-xl">
