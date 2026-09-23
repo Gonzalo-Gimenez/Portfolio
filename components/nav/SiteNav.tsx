@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { ArrowRight } from "@phosphor-icons/react";
 
 import { BrandMark } from "@/components/brand/BrandMark";
 import { useLocale } from "@/components/i18n/LocaleProvider";
@@ -9,7 +10,7 @@ import { SITE } from "@/lib/site";
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
-  const { t, toggleLocale } = useLocale();
+  const { locale, t, setLocale } = useLocale();
 
   useEffect(() => {
     const onScroll = () => {
@@ -25,7 +26,6 @@ export function SiteNav() {
     { href: "/#proyectos", label: t.nav.projects },
     { href: "/#perfil", label: t.nav.profile },
     { href: "/#habilidades", label: t.nav.skills },
-    { href: "/#contacto", label: t.nav.contact },
   ] as const;
 
   return (
@@ -50,10 +50,10 @@ export function SiteNav() {
               <span className="xenon-text">{SITE.role}</span>
             </span>
           </Link>
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-4 sm:gap-6">
             <nav
               aria-label={t.navAria}
-              className="flex max-w-[min(100%,42rem)] flex-wrap items-center justify-end gap-x-4 gap-y-1 text-xs sm:gap-x-5 sm:text-sm"
+              className="flex max-w-[min(100%,36rem)] flex-wrap items-center justify-end gap-x-4 gap-y-1 text-xs sm:gap-x-5 sm:text-sm"
             >
               {links.map((item) => (
                 <Link
@@ -65,14 +65,43 @@ export function SiteNav() {
                 </Link>
               ))}
             </nav>
-            <button
-              type="button"
-              onClick={toggleLocale}
+            <div
+              role="group"
               aria-label={t.langAria}
-              className="inline-flex h-8 shrink-0 items-center rounded-full border border-[var(--border)] px-3 text-xs font-medium tracking-wide text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="inline-flex shrink-0 rounded-full border border-[var(--border)] p-0.5"
             >
-              {t.langSwitch}
-            </button>
+              <button
+                type="button"
+                onClick={() => setLocale("es")}
+                aria-pressed={locale === "es"}
+                className={`cursor-pointer rounded-full px-2.5 py-1 text-[11px] font-medium tracking-wide transition-colors ${
+                  locale === "es"
+                    ? "bg-[color-mix(in_oklab,var(--accent)_22%,transparent)] xenon-text"
+                    : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                }`}
+              >
+                {t.langEs}
+              </button>
+              <button
+                type="button"
+                onClick={() => setLocale("en")}
+                aria-pressed={locale === "en"}
+                className={`cursor-pointer rounded-full px-2.5 py-1 text-[11px] font-medium tracking-wide transition-colors ${
+                  locale === "en"
+                    ? "bg-[color-mix(in_oklab,var(--accent)_22%,transparent)] xenon-text"
+                    : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                }`}
+              >
+                {t.langEn}
+              </button>
+            </div>
+            <Link
+              href="/#contacto"
+              className="xenon-fill ml-1 inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full bg-[var(--accent)] px-3.5 py-1.5 text-xs font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97] sm:ml-2 sm:px-4 sm:text-sm"
+            >
+              {t.talk}
+              <ArrowRight size={14} weight="bold" aria-hidden />
+            </Link>
           </div>
         </div>
       </header>

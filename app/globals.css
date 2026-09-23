@@ -182,21 +182,21 @@ body::after {
   top: 0;
   left: 0;
   z-index: 15;
-  width: 18rem;
-  height: 18rem;
-  margin: -9rem 0 0 -9rem;
+  width: 11rem;
+  height: 11rem;
+  margin: -5.5rem 0 0 -5.5rem;
   border-radius: 50%;
   pointer-events: none;
   will-change: transform;
   mix-blend-mode: screen;
   background: radial-gradient(
     circle at 50% 48%,
-    rgba(255, 248, 252, 0.28) 0%,
-    rgba(255, 217, 232, 0.14) 28%,
-    rgba(255, 186, 214, 0.05) 52%,
-    transparent 70%
+    rgba(255, 248, 252, 0.12) 0%,
+    rgba(255, 217, 232, 0.06) 32%,
+    rgba(255, 186, 214, 0.02) 55%,
+    transparent 72%
   );
-  filter: blur(22px);
+  filter: blur(26px);
 }
 
 @media (prefers-reduced-motion: reduce) {
