@@ -26,7 +26,7 @@ export function HomeStory() {
           <h2 className="max-w-[12ch] text-[clamp(2.2rem,6vw,4.8rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
             {t.contactTitle}
           </h2>
-          <p className="mt-5 max-w-[40ch] text-[var(--text-secondary)]">
+          <p className="mt-5 max-w-[52ch] text-[var(--text-secondary)]">
             {t.contactLead}
           </p>
           <a

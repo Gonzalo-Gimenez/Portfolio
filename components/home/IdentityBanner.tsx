@@ -26,7 +26,7 @@ export function IdentityBanner() {
               {SITE.firstName} {SITE.lastName}
             </h1>
             <p className="xenon-text mt-4 text-lg leading-snug sm:text-xl">
-              {SITE.roles}
+              {t.heroRole}
             </p>
             <p className="mt-1.5 text-lg text-[var(--text-secondary)] sm:text-xl">
               {t.coverLabel}

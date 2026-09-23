@@ -55,7 +55,7 @@ export function HomeContact() {
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
           {t.contactTitle}
         </h2>
-        <p className="mt-4 max-w-[40ch] text-[var(--text-secondary)]">
+        <p className="mt-4 max-w-[52ch] text-[var(--text-secondary)]">
           {t.contactLead}
         </p>
 

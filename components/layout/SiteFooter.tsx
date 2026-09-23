@@ -16,7 +16,7 @@ export function SiteFooter() {
             <BrandMark className="h-6 w-6" />
             {SITE.name}
             <span className="text-[var(--text-muted)]"> · </span>
-            {SITE.role}
+            {t.navRole}
           </p>
           <nav
             aria-label={t.footerAria}

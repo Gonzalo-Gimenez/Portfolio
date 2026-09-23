@@ -94,7 +94,8 @@ export function PortfolioHud({ showBack = false }: { showBack?: boolean }) {
 }
 
 export function ContactRow() {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
+  const cvHref = locale === "en" ? SITE.cvPathEn : SITE.cvPath;
   return (
     <span className="inline-flex flex-nowrap items-center gap-x-5">
       <a
@@ -123,7 +124,7 @@ export function ContactRow() {
         Mail
       </a>
       <a
-        href={SITE.cvPath}
+        href={cvHref}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[var(--text-secondary)] hover:text-[var(--text-primary)]"

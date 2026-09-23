@@ -2,8 +2,8 @@ export const SITE = {
   name: "Gonzalo Gimenez",
   firstName: "Gonzalo",
   lastName: "Gimenez",
-  role: "Data & AI Engineer",
-  roles: "AI Engineer · Data Analyst · Data Engineer",
+  role: "AI Engineer & Data",
+  roles: "AI Engineer, Data & Desarrollo de Software",
   location: "Buenos Aires, Argentina",
   coverLabel: "Portfolio personal",
   subtitle:
@@ -14,6 +14,7 @@ export const SITE = {
   phone: "+54 11 3430-7458",
   phoneHref: "tel:+541134307458",
   cvPath: "/cv/CV_Gonzalo_Gimenez.pdf",
+  cvPathEn: "/cv/CV_Gonzalo_Gimenez_EN.pdf",
   photoPath: "/perfil-camisa.jpg",
   coverPath: "/portada.jpg",
   logoPath: "/logo-gg.png",

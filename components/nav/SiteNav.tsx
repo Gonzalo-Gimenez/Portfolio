@@ -47,7 +47,7 @@ export function SiteNav() {
             <span>
               {SITE.firstName}
               <span className="text-[var(--text-muted)]"> · </span>
-              <span className="xenon-text">{SITE.role}</span>
+              <span className="xenon-text">{t.navRole}</span>
             </span>
           </Link>
           <div className="flex items-center gap-4 sm:gap-6">
