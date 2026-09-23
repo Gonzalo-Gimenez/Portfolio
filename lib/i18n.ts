@@ -29,7 +29,7 @@ export const UI = {
     prevProject: "Proyecto anterior",
     nextProject: "Proyecto siguiente",
     profileTitle: "Perfil",
-    aboutLead: "Producto, código y contexto real en la misma mesa.",
+    aboutLead: "Producto, código y contexto real en la misma estrategia.",
     aboutParagraphs: [
       "Entiendo el problema, diseño la experiencia y lo llevo a código. No construyo pantallas sueltas. Construyo sistemas alrededor de operaciones reales.",
       "Entrelazo negocio, mercado, datos e inteligencia. Combino ejecución técnica, criterio de producto y lectura del negocio. También hago automatizaciones que entran en el trabajo de todos los días.",
@@ -88,7 +88,7 @@ export const UI = {
     prevProject: "Previous project",
     nextProject: "Next project",
     profileTitle: "Profile",
-    aboutLead: "Product, code, and real context on the same table.",
+    aboutLead: "Product, code, and real context in the same strategy.",
     aboutParagraphs: [
       "I understand the problem, design the experience, and ship it in code. I don't build disconnected screens. I build systems around real operations.",
       "I connect business, market, data, and intelligence. I combine technical execution, product judgment, and business reading. I also build automations that land in everyday work.",
