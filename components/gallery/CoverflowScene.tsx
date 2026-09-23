@@ -426,12 +426,7 @@ function ProjectCard({
         onPointerOut={onOut}
       >
         <planeGeometry args={[SCREEN_W, SCREEN_H]} />
-        <meshStandardMaterial
-          map={texture}
-          roughness={0.3}
-          metalness={0.1}
-          toneMapped={false}
-        />
+        <meshBasicMaterial map={texture} toneMapped={false} />
       </mesh>
       <XenonFrame reduced={reduced} strength={rimStrength} />
     </group>
@@ -458,14 +453,14 @@ function CoverflowRig({
 
   return (
     <>
-      <fog attach="fog" args={["#101318", 14, 26]} />
-      <ambientLight intensity={0.38} />
-      <directionalLight position={[4, 5, 6]} intensity={1.2} />
+      <fog attach="fog" args={["#101318", 18, 32]} />
+      <ambientLight intensity={0.85} />
+      <directionalLight position={[4, 5, 6]} intensity={0.55} />
       <spotLight
         position={[0, 3, 6]}
         angle={0.55}
         penumbra={0.7}
-        intensity={1.6}
+        intensity={0.9}
         color="#e8f4ff"
       />
       {WORKS.map((work, i) => (

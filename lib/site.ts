@@ -21,9 +21,10 @@ export const SITE = {
   education:
     "Tecnicatura Superior en Desarrollo de Software, IFTS 11. Cursando Licenciatura en Ciencia de Datos en la Universidad de la Ciudad de Buenos Aires.",
   languages: "Inglés intermedio.",
-  manifesto: "Sobre mí",
-  aboutLead:
-    "No construyo pantallas sueltas. Construyo sistemas alrededor de operaciones reales.",
-  about:
-    "Comprendo y entrelazo negocio, mercado, datos e inteligencia conectados. Combino ejecución técnica, criterio de producto y lectura del negocio — con automatizaciones que entran en el trabajo de todos los días.",
+  manifesto: "Perfil",
+  aboutLead: "Producto, código y contexto real en la misma mesa.",
+  aboutParagraphs: [
+    "Entiendo el problema, diseño la experiencia y lo llevo a código. No construyo pantallas sueltas. Construyo sistemas alrededor de operaciones reales.",
+    "Entrelazo negocio, mercado, datos e inteligencia. Combino ejecución técnica, criterio de producto y lectura del negocio. También hago automatizaciones que entran en el trabajo de todos los días.",
+  ],
 } as const;

@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 import type { WorkItem } from "@/lib/projects";
+import { localizeWork } from "@/lib/projects";
 import { SkillChip } from "@/components/home/SkillIcon";
 import { XenonCover } from "@/components/media/XenonCover";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function CaseStudyBody({ work }: { work: WorkItem }) {
+  const { locale, t } = useLocale();
+  const copy = localizeWork(work, locale);
+
   return (
     <article className="mx-auto w-full max-w-3xl px-5 py-10 sm:px-8 sm:py-14">
       <Link
@@ -13,71 +20,71 @@ export function CaseStudyBody({ work }: { work: WorkItem }) {
         className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       >
         <ArrowLeft size={16} weight="regular" aria-hidden />
-        Volver
+        {t.caseBack}
       </Link>
 
       <div className="mt-8">
-        <XenonCover src={work.coverPath} alt={work.title} />
+        <XenonCover src={copy.coverPath} alt={copy.title} />
       </div>
 
       <header className="mt-8">
-        <p className="xenon-text text-sm">{work.roleLabel}</p>
+        <p className="xenon-text text-sm">{copy.roleLabel}</p>
         <div className="mt-2 flex flex-wrap items-baseline gap-3">
           <h1 className="text-[clamp(2rem,5vw,3.2rem)] font-semibold tracking-[-0.03em]">
-            {work.title}
+            {copy.title}
           </h1>
-          {work.status === "proximo" ? (
+          {copy.status === "proximo" ? (
             <span className="rounded-full border border-[var(--border)] px-3 py-0.5 text-xs text-[var(--text-muted)]">
-              Próximo
+              {t.caseUpcoming}
             </span>
           ) : null}
         </div>
         <p className="mt-3 max-w-[52ch] text-base text-[var(--text-secondary)]">
-          {work.tagline}
+          {copy.tagline}
         </p>
       </header>
 
       <div className="mt-10 grid gap-8 sm:grid-cols-2">
         <section>
-          <h2 className="text-sm text-[var(--text-muted)]">Por qué</h2>
+          <h2 className="text-sm text-[var(--text-muted)]">{t.caseWhy}</h2>
           <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-            {work.why}
+            {copy.why}
           </p>
-          {work.siteUrl ? (
+          {copy.siteUrl ? (
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-              Landing:{" "}
+              {t.caseLanding}:{" "}
               <a
-                href={work.siteUrl}
+                href={copy.siteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--accent)] underline underline-offset-4 hover:text-[var(--text-primary)]"
               >
-                {work.siteUrl.replace(/^https?:\/\//, "")}
+                {copy.siteUrl.replace(/^https?:\/\//, "")}
               </a>
             </p>
           ) : null}
         </section>
         <section>
-          <h2 className="text-sm text-[var(--text-muted)]">Cómo está armado</h2>
+          <h2 className="text-sm text-[var(--text-muted)]">{t.caseHow}</h2>
           <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-            {work.architecture}
+            {copy.architecture}
           </p>
         </section>
       </div>
 
       <section className="mt-10">
-        <h2 className="text-sm text-[var(--text-muted)]">Qué demuestra</h2>
+        <h2 className="text-sm text-[var(--text-muted)]">{t.caseShows}</h2>
         <ul className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
-          {work.highlights.map((item) => (
+          {copy.highlights.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
       </section>
 
       <section className="mt-8">
-        <h2 className="text-sm text-[var(--text-muted)]">Stack</h2>
+        <h2 className="text-sm text-[var(--text-muted)]">{t.caseStack}</h2>
         <ul className="mt-3 flex flex-wrap gap-2">
-          {work.stack.map((tech) => (
+          {copy.stack.map((tech) => (
             <li key={tech}>
               <SkillChip name={tech} />
             </li>
@@ -85,11 +92,8 @@ export function CaseStudyBody({ work }: { work: WorkItem }) {
         </ul>
       </section>
 
-      {work.status === "proximo" ? (
-        <p className="mt-8 text-sm text-[var(--text-muted)]">
-          Este caso se suma al portfolio cuando el entregable esté listo. No hay
-          demo ni métricas publicadas todavía.
-        </p>
+      {copy.status === "proximo" ? (
+        <p className="mt-8 text-sm text-[var(--text-muted)]">{t.caseSoon}</p>
       ) : null}
     </article>
   );

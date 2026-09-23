@@ -1,3 +1,5 @@
+import { WORKS_EN } from "@/lib/projects-en";
+
 export type WorkSlug =
   | "insightai"
   | "energia"
@@ -192,3 +194,21 @@ export function getWork(slug: string): WorkItem | undefined {
 }
 
 export const WORK_SLUGS: WorkSlug[] = WORKS.map((w) => w.slug);
+
+export function localizeWork(
+  work: WorkItem,
+  locale: "es" | "en",
+): WorkItem {
+  if (locale !== "en") return work;
+  const en = WORKS_EN[work.slug];
+  return {
+    ...work,
+    title: en.title ?? work.title,
+    roleLabel: en.roleLabel ?? work.roleLabel,
+    tagline: en.tagline,
+    summary: en.summary,
+    why: en.why,
+    architecture: en.architecture,
+    highlights: [...en.highlights],
+  };
+}

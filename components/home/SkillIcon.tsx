@@ -38,7 +38,9 @@ type Glyph = ComponentType<
 
 const ICONS: Record<string, Glyph> = {
   "integración de llms": Brain,
+  "llm integration": Brain,
   "arquitecturas multi-agente": Graph,
+  "multi-agent architectures": Graph,
   n8n: SiN8n,
   "prompt engineering": ChatTeardropText,
   python: SiPython,
@@ -50,6 +52,7 @@ const ICONS: Record<string, Glyph> = {
   pandas: SiPandas,
   etl: FlowArrow,
   "modelado de datos": Cube,
+  "data modeling": Cube,
   typescript: SiTypescript,
   nestjs: SiNestjs,
   "node.js": SiNodedotjs,

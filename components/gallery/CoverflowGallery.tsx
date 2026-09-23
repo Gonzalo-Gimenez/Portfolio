@@ -2,31 +2,45 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent,
+} from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 
 import { SceneErrorBoundary } from "@/components/index/SceneErrorBoundary";
 import { CenterRule } from "@/components/layout/SectionMark";
 import { WorkIndexFallback } from "@/components/index/WorkIndexFallback";
 import { SkillChip } from "@/components/home/SkillIcon";
-import { WORKS } from "@/lib/projects";
+import { WORKS, localizeWork } from "@/lib/projects";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import {
   usePrefersReducedMotion,
   useWebGLAvailable,
 } from "@/lib/hooks/use-media";
 
+function GalleryLoading() {
+  const { t } = useLocale();
+  return (
+    <div className="flex min-h-[70dvh] items-center justify-center text-sm text-[var(--text-muted)]">
+      {t.galleryLoading}
+    </div>
+  );
+}
+
 const CoverflowScene = dynamic(() => import("./CoverflowScene"), {
   ssr: false,
-  loading: () => (
-    <div className="flex min-h-[70dvh] items-center justify-center text-sm text-[var(--text-muted)]">
-      Cargando galería
-    </div>
-  ),
+  loading: () => <GalleryLoading />,
 });
 
 function ProjectHud({ activeIndex }: { activeIndex: number }) {
-  const work = WORKS[activeIndex];
-  if (!work) return null;
+  const { locale, t } = useLocale();
+  const source = WORKS[activeIndex];
+  if (!source) return null;
+  const work = localizeWork(source, locale);
 
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4 text-center">
@@ -49,7 +63,7 @@ function ProjectHud({ activeIndex }: { activeIndex: number }) {
           href={`/trabajo/${work.slug}`}
           className="xenon-fill inline-flex rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97]"
         >
-          Ver caso
+          {t.viewCase}
         </Link>
       </div>
     </div>
@@ -59,6 +73,7 @@ function ProjectHud({ activeIndex }: { activeIndex: number }) {
 const WORK_COUNT = WORKS.length;
 
 export function CoverflowGallery() {
+  const { t } = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
@@ -120,7 +135,7 @@ export function CoverflowGallery() {
   };
 
   return (
-    <section id="proyectos" className="scroll-mt-16" aria-label="Proyectos">
+    <section id="proyectos" className="scroll-mt-16" aria-label={t.galleryTitle}>
       <div
         className="relative"
         onMouseEnter={() => setPaused(true)}
@@ -129,13 +144,13 @@ export function CoverflowGallery() {
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <CenterRule />
           <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-            Proyectos
+            {t.galleryTitle}
           </h2>
         </div>
 
         {webgl === null ? (
           <div className="mt-8 flex h-[38rem] items-center justify-center text-sm text-[var(--text-muted)] sm:mt-10 sm:h-[44rem]">
-            Preparando galería
+            {t.galleryPreparing}
           </div>
         ) : use3D ? (
           <div
@@ -167,7 +182,7 @@ export function CoverflowGallery() {
             type="button"
             onClick={goPrev}
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-[color-mix(in_oklab,var(--bg-base)_40%,transparent)] text-[var(--text-secondary)] backdrop-blur-sm transition-colors hover:border-[var(--accent)] hover:text-[var(--text-primary)]"
-            aria-label="Proyecto anterior"
+            aria-label={t.prevProject}
           >
             <CaretLeft size={22} weight="bold" aria-hidden />
           </button>
@@ -175,7 +190,7 @@ export function CoverflowGallery() {
             type="button"
             onClick={goNext}
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-[color-mix(in_oklab,var(--bg-base)_40%,transparent)] text-[var(--text-secondary)] backdrop-blur-sm transition-colors hover:border-[var(--accent)] hover:text-[var(--text-primary)]"
-            aria-label="Proyecto siguiente"
+            aria-label={t.nextProject}
           >
             <CaretRight size={22} weight="bold" aria-hidden />
           </button>

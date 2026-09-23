@@ -1,8 +1,14 @@
+"use client";
+
 import { CenterRule } from "@/components/layout/SectionMark";
 import { SkillChip } from "@/components/home/SkillIcon";
-import { SKILL_GROUPS } from "@/lib/skills";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { skillGroups } from "@/lib/skills";
 
 export function HomeSkills() {
+  const { locale, t } = useLocale();
+  const groups = skillGroups(locale);
+
   return (
     <section
       id="habilidades"
@@ -11,18 +17,15 @@ export function HomeSkills() {
       <div className="mx-auto max-w-6xl">
         <CenterRule />
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-          Habilidades
+          {t.skillsTitle}
         </h2>
         <p className="mt-4 max-w-[48ch] text-base text-[var(--text-secondary)]">
-          Stack de software, datos e IA aplicada. Lo que uso para anclar
-          respuestas a hechos, analizar y mover pipelines.
+          {t.skillsLead}
         </p>
         <div className="mt-12 grid gap-10 sm:grid-cols-3">
-          {SKILL_GROUPS.map((group) => (
+          {groups.map((group) => (
             <div key={group.id}>
-              <h3 className="xenon-text text-lg font-medium">
-                {group.title}
-              </h3>
+              <h3 className="xenon-text text-lg font-medium">{group.title}</h3>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {group.items.map((item) => (
                   <li key={item}>

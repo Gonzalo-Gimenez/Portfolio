@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import {
   GraduationCap,
@@ -7,25 +9,18 @@ import {
 
 import { SITE } from "@/lib/site";
 import { CenterRule } from "@/components/layout/SectionMark";
-
-const FACTS = [
-  {
-    icon: MapPin,
-    label: SITE.location,
-  },
-  {
-    icon: Translate,
-    label: SITE.languages.replace(/\.$/, ""),
-  },
-  {
-    icon: GraduationCap,
-    label: SITE.education,
-  },
-] as const;
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function HomeAbout() {
+  const { t } = useLocale();
+  const facts = [
+    { icon: MapPin, label: SITE.location },
+    { icon: Translate, label: t.languages },
+    { icon: GraduationCap, label: t.education },
+  ] as const;
+
   return (
-    <section id="sobre-mi" className="scroll-mt-16 pb-20 sm:pb-28">
+    <section id="perfil" className="scroll-mt-16 pb-20 sm:pb-28">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <CenterRule />
       </div>
@@ -49,16 +44,18 @@ export function HomeAbout() {
         <div className="relative z-10 mx-auto flex min-h-[36rem] max-w-6xl items-end px-5 py-16 sm:min-h-[42rem] sm:px-8 sm:py-24">
           <div className="max-w-[40rem]">
             <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-              {SITE.manifesto}
+              {t.profileTitle}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-[var(--text-primary)] sm:text-xl">
-              {SITE.aboutLead}
+              {t.aboutLead}
             </p>
-            <p className="mt-4 max-w-[52ch] text-base leading-relaxed text-[var(--text-secondary)]">
-              {SITE.about}
-            </p>
+            <div className="mt-4 max-w-[52ch] space-y-4 text-base leading-relaxed text-[var(--text-secondary)]">
+              {t.aboutParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
             <ul className="mt-8 max-w-[52ch] space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-              {FACTS.map((fact) => (
+              {facts.map((fact) => (
                 <li key={fact.label} className="flex items-start gap-2.5">
                   <fact.icon
                     size={18}

@@ -3,22 +3,31 @@
 import { useState } from "react";
 
 import { CenterRule } from "@/components/layout/SectionMark";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { SITE } from "@/lib/site";
 
-function mailtoHref(name: string, from: string, message: string) {
+function mailtoHref(
+  name: string,
+  from: string,
+  message: string,
+  subjectLabel: string,
+  nameLabel: string,
+) {
   const subject = encodeURIComponent(
-    `Consulta portfolio${name ? ` — ${name}` : ""}`,
+    `${subjectLabel}${name ? ` - ${name}` : ""}`,
   );
   const body = encodeURIComponent(
-    `Nombre: ${name}\nEmail: ${from}\n\n${message}`,
+    `${nameLabel}: ${name}\nEmail: ${from}\n\n${message}`,
   );
   return `mailto:${SITE.email}?subject=${subject}&body=${body}`;
 }
 
 export function HomeContact() {
+  const { t } = useLocale();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [human, setHuman] = useState(false);
   const [status, setStatus] = useState<"idle" | "opened">("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,34 +35,37 @@ export function HomeContact() {
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
     const trimmedMessage = message.trim();
-    if (!trimmedName || !trimmedEmail || trimmedMessage.length < 8) {
+    if (!trimmedName || !trimmedEmail || trimmedMessage.length < 8 || !human) {
       return;
     }
-    window.location.href = mailtoHref(trimmedName, trimmedEmail, trimmedMessage);
+    window.location.href = mailtoHref(
+      trimmedName,
+      trimmedEmail,
+      trimmedMessage,
+      t.mailSubject,
+      t.mailName,
+    );
     setStatus("opened");
   };
 
   return (
-    <section
-      id="contacto"
-      className="scroll-mt-16 px-5 pb-20 sm:px-8 sm:pb-28"
-    >
+    <section id="contacto" className="scroll-mt-16 px-5 pb-20 sm:px-8 sm:pb-28">
       <div className="mx-auto max-w-6xl">
         <CenterRule />
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-          Contacto
+          {t.contactTitle}
         </h2>
         <p className="mt-4 max-w-[40ch] text-[var(--text-secondary)]">
-          Si buscás un AI Engineer, Data Analyst o Data Engineer, escribime.
+          {t.contactLead}
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          className="mt-10 grid max-w-xl gap-5"
-        >
+        <form onSubmit={handleSubmit} className="mt-10 grid max-w-xl gap-5">
           <div className="flex flex-col gap-2">
-            <label htmlFor="contact-name" className="text-sm text-[var(--text-secondary)]">
-              Nombre
+            <label
+              htmlFor="contact-name"
+              className="text-sm text-[var(--text-secondary)]"
+            >
+              {t.contactName}
             </label>
             <input
               id="contact-name"
@@ -64,12 +76,15 @@ export function HomeContact() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="rounded-lg border border-[var(--border)] bg-[var(--bg-base)] px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
-              placeholder="Tu nombre"
+              placeholder={t.contactNamePh}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="contact-email" className="text-sm text-[var(--text-secondary)]">
-              Email
+            <label
+              htmlFor="contact-email"
+              className="text-sm text-[var(--text-secondary)]"
+            >
+              {t.contactEmail}
             </label>
             <input
               id="contact-email"
@@ -84,8 +99,11 @@ export function HomeContact() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="contact-message" className="text-sm text-[var(--text-secondary)]">
-              Mensaje
+            <label
+              htmlFor="contact-message"
+              className="text-sm text-[var(--text-secondary)]"
+            >
+              {t.contactMessage}
             </label>
             <textarea
               id="contact-message"
@@ -96,22 +114,46 @@ export function HomeContact() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="resize-y rounded-lg border border-[var(--border)] bg-[var(--bg-base)] px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
-              placeholder="Contame en qué rol o proyecto estás pensando"
+              placeholder={t.contactMessagePh}
             />
           </div>
+
+          <label
+            className="not-robot mx-auto flex w-[304px] cursor-pointer items-center gap-3 rounded-sm border border-[#d3d3d3] bg-[#f9f9f9] px-3 py-3 text-[#222]"
+            htmlFor="contact-human"
+          >
+            <input
+              id="contact-human"
+              name="human"
+              type="checkbox"
+              required
+              checked={human}
+              onChange={(e) => setHuman(e.target.checked)}
+              className="h-6 w-6 shrink-0 cursor-pointer accent-[#1a73e8]"
+              aria-label={t.notRobotAria}
+            />
+            <span className="flex-1 text-sm leading-tight">{t.notRobot}</span>
+            <img
+              src="/not-robot.svg"
+              alt=""
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0"
+            />
+          </label>
+
           <button
             type="submit"
             className="xenon-fill inline-flex w-fit rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97]"
           >
-            Enviar
+            {t.contactSend}
           </button>
           {status === "opened" ? (
             <p className="text-sm text-[var(--text-secondary)]" role="status">
-              Se abrió tu correo con el mensaje listo para{" "}
+              {t.contactOpened}{" "}
               <a className="underline" href={`mailto:${SITE.email}`}>
                 {SITE.email}
               </a>
-              . Si no se abrió, tocá esa dirección.
             </p>
           ) : null}
         </form>

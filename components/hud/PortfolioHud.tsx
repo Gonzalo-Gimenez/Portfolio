@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,6 +12,7 @@ import {
 
 import { SITE } from "@/lib/site";
 import { WORKS } from "@/lib/projects";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function IdentityRail() {
   return (
@@ -91,6 +94,7 @@ export function PortfolioHud({ showBack = false }: { showBack?: boolean }) {
 }
 
 export function ContactRow() {
+  const { t } = useLocale();
   return (
     <span className="inline-flex flex-nowrap items-center gap-x-5">
       <a
@@ -112,7 +116,7 @@ export function ContactRow() {
         LinkedIn
       </a>
       <a
-        href={`mailto:${SITE.email}?subject=${encodeURIComponent("Consulta portfolio")}`}
+        href={`mailto:${SITE.email}?subject=${encodeURIComponent(t.mailSubject)}`}
         className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       >
         <EnvelopeSimple size={18} weight="regular" aria-hidden />

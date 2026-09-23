@@ -4,18 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/BrandMark";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { SITE } from "@/lib/site";
-
-const LINKS = [
-  { href: "/#inicio", label: "Inicio" },
-  { href: "/#proyectos", label: "Proyectos" },
-  { href: "/#sobre-mi", label: "Sobre mí" },
-  { href: "/#habilidades", label: "Habilidades" },
-  { href: "/#contacto", label: "Contacto" },
-] as const;
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
+  const { t, toggleLocale } = useLocale();
 
   useEffect(() => {
     const onScroll = () => {
@@ -25,6 +19,14 @@ export function SiteNav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const links = [
+    { href: "/#inicio", label: t.nav.home },
+    { href: "/#proyectos", label: t.nav.projects },
+    { href: "/#perfil", label: t.nav.profile },
+    { href: "/#habilidades", label: t.nav.skills },
+    { href: "/#contacto", label: t.nav.contact },
+  ] as const;
 
   return (
     <>
@@ -48,20 +50,30 @@ export function SiteNav() {
               <span className="xenon-text">{SITE.role}</span>
             </span>
           </Link>
-          <nav
-            aria-label="Secciones del sitio"
-            className="flex max-w-[min(100%,42rem)] flex-wrap items-center justify-end gap-x-4 gap-y-1 text-xs sm:gap-x-5 sm:text-sm"
-          >
-            {LINKS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-[var(--text-secondary)] underline-offset-4 transition-colors hover:text-[var(--text-primary)] hover:underline"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex items-center gap-3 sm:gap-4">
+            <nav
+              aria-label={t.navAria}
+              className="flex max-w-[min(100%,42rem)] flex-wrap items-center justify-end gap-x-4 gap-y-1 text-xs sm:gap-x-5 sm:text-sm"
+            >
+              {links.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-[var(--text-secondary)] underline-offset-4 transition-colors hover:text-[var(--text-primary)] hover:underline"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <button
+              type="button"
+              onClick={toggleLocale}
+              aria-label={t.langAria}
+              className="inline-flex h-8 shrink-0 items-center rounded-full border border-[var(--border)] px-3 text-xs font-medium tracking-wide text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              {t.langSwitch}
+            </button>
+          </div>
         </div>
       </header>
       <div className="h-14 sm:h-16" aria-hidden />

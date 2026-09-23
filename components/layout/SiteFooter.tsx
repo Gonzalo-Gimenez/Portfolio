@@ -1,8 +1,13 @@
+"use client";
+
 import { ContactRow } from "@/components/hud/PortfolioHud";
 import { BrandMark } from "@/components/brand/BrandMark";
 import { SITE } from "@/lib/site";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function SiteFooter() {
+  const { t } = useLocale();
+
   return (
     <footer className="px-5 pb-12 pt-4 sm:px-8 sm:pb-16">
       <div className="mx-auto max-w-6xl border-t border-[var(--border)] pt-8">
@@ -14,7 +19,7 @@ export function SiteFooter() {
             {SITE.role}
           </p>
           <nav
-            aria-label="Pie de página"
+            aria-label={t.footerAria}
             className="flex flex-nowrap items-center gap-x-5 text-sm"
           >
             <ContactRow />
