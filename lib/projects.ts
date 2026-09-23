@@ -23,6 +23,7 @@ export type WorkItem = {
   coverPath: string;
   demoUrl?: string;
   repoUrl?: string;
+  siteUrl?: string;
 };
 
 export const WORKS: WorkItem[] = [
@@ -132,9 +133,9 @@ export const WORKS: WorkItem[] = [
       "Ecosistema agtech de ganado: collares IoT, trazabilidad y gestión del rodeo en el campo.",
     summary:
       "Plataforma para seguir el ganado con collar IoT: ubicación, estado y operación del establecimiento.",
-    why: "Agroblock es un ecosistema agtech de ganado. El collar IoT sale al campo; la plataforma concentra trazabilidad, alertas y la operación del rodeo.",
+    why: "Agroblock es un ecosistema agtech de ganado. El collar IoT sale al campo; la plataforma concentra trazabilidad, alertas y la operación del rodeo. La landing del producto está en www.agroblock.com.ar.",
     architecture:
-      "Collar IoT en el animal, telemetría hacia la plataforma y pantallas para el productor. El foco es el ciclo completo: campo, dato y decisión.",
+      "Collar IoT en el animal, telemetría hacia la plataforma y pantallas para el productor. El foco es el ciclo completo: campo, dato y decisión. El front público de la landing se ve en www.agroblock.com.ar.",
     stack: ["IoT", "Next.js", "Node.js", "PostgreSQL"],
     highlights: [
       "Collar IoT como fuente de verdad del animal en el campo.",
@@ -142,6 +143,7 @@ export const WORKS: WorkItem[] = [
       "Ecosistema de punta a punta: hardware en el animal y software en el establecimiento.",
     ],
     coverPath: "/covers/cover-agroblock.png",
+    siteUrl: "https://www.agroblock.com.ar",
   },
   {
     slug: "perkis",
@@ -175,7 +177,7 @@ export const WORKS: WorkItem[] = [
     why: "Cinemaland es una plataforma de cine con frontend y backend. El caso cubre cartelera, funciones y la API que las sostiene.",
     architecture:
       "Frontend de cartelera y flujo de usuario; backend con API REST para películas, funciones y la operación de la sala.",
-    stack: ["React", "Node.js", "APIs REST", "PostgreSQL"],
+    stack: ["Angular", "Node.js", "APIs REST", "PostgreSQL"],
     highlights: [
       "Frontend y backend del mismo producto.",
       "Cartelera y funciones como dominio, no un CRUD genérico.",
