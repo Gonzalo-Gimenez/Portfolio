@@ -136,11 +136,7 @@ export function CoverflowGallery() {
 
   return (
     <section id="proyectos" className="scroll-mt-16" aria-label={t.galleryTitle}>
-      <div
-        className="relative"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
+      <div className="relative">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <CenterRule />
           <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
@@ -159,9 +155,11 @@ export function CoverflowGallery() {
             onPointerUp={(e) => finishDrag(e.clientX, e.clientY)}
             onPointerCancel={() => {
               dragStart.current = null;
+              setPaused(false);
             }}
             onPointerLeave={() => {
               dragStart.current = null;
+              setPaused(false);
             }}
           >
             <SceneErrorBoundary>
