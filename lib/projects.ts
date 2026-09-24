@@ -5,6 +5,8 @@ export type WorkSlug =
   | "energia"
   | "flota"
   | "autostock-ai"
+  | "chatbot-ai"
+  | "trading-agents"
   | "agroblock"
   | "perkis"
   | "cinemaland";
@@ -35,21 +37,22 @@ export const WORKS: WorkItem[] = [
     roleLabel: "AI Engineer",
     status: "shipped",
     tagline:
-      "Plataforma de gestión con un chatbot de inteligencia artificial: consulta las bases del sistema y muestra las gráficas de lo que le pedís.",
+      "Plataforma de gestión con chatbot RAG: recupera del warehouse y muestra las gráficas de lo que le pedís.",
     summary:
-      "Plataforma analítica: el agente de IA responde con datos de PostgreSQL y actualiza KPIs y gráficos según la pregunta.",
-    why: "InsightAI es una plataforma de gestión con un chatbot de inteligencia artificial. El agente no inventa cifras: consulta las bases de datos del sistema (warehouse Nortec) y, en el mismo escritorio, muestra las gráficas específicas de lo que le consultaste — ingresos, mix, ranking o el recorte de una sede.",
+      "Plataforma analítica: RAG sobre PostgreSQL — el agente recupera datos y actualiza KPIs y gráficos según la pregunta.",
+    why: "InsightAI es una plataforma de gestión con un chatbot de inteligencia artificial. El agente no inventa cifras: primero recupera del warehouse Nortec (RAG con tools SQL) y después responde; en el mismo escritorio muestra las gráficas del recorte — ingresos, mix, ranking o una sede.",
     architecture:
-      "Retail Nortec en PostgreSQL (~190k líneas). FastAPI + Groq: el agente de inteligencia artificial invoca herramientas SQL o un SELECT read-only validado. La API arma un ViewSpec; Next.js 15 y Recharts pintan el canvas. El SQL usado queda visible en el chat.",
+      "Retail Nortec en PostgreSQL (~190k líneas). FastAPI + Groq: flujo RAG retrieve-then-generate — herramientas SQL o SELECT read-only validado, contexto al LLM, respuesta anclada. La API arma un ViewSpec; Next.js 15 y Recharts pintan el canvas. El SQL usado queda visible en el chat.",
     stack: [
       "FastAPI",
       "PostgreSQL",
+      "RAG",
       "Groq (tool calling)",
       "Next.js 15",
       "Recharts",
     ],
     highlights: [
-      "Chatbot de IA anclado a las bases: KPIs, series, mix, ranking o SQL de lectura.",
+      "RAG sobre el warehouse: recupera KPIs, series, mix, ranking o SQL de lectura antes de responder.",
       "Las gráficas se recortan al filtro de la pregunta (sede, año, período).",
       "SELECT de una sentencia, tablas permitidas y LIMIT.",
     ],
@@ -108,23 +111,84 @@ export const WORKS: WorkItem[] = [
       "Plataforma de gestión de agencias y flota de vehículos, con un agente de inteligencia artificial para consultar stock y P&L.",
     summary:
       "Plataforma multi-sucursal: landing, escritorio con agente de IA y fichas para cargar costos según la línea de negocio.",
-    why: "AutoStock es la plataforma con la que se gestionan agencias y la flota (0 km, usados, renta y apps). El agente de inteligencia artificial consulta las bases del sistema; en paralelo, cada unidad tiene ficha para registrar costos con reglas por línea.",
+    why: "AutoStock es la plataforma con la que se gestionan agencias y la flota (0 km, usados, renta y apps). El agente RAG recupera del ledger y stock antes de responder; en paralelo, cada unidad tiene ficha para registrar costos con reglas por línea.",
     architecture:
-      "Postgres (agencies, units, ledger). FastAPI: CRUD de costos con matriz 0km/usados/renta y agente Groq (kpis_flota, stock, mix, P&L, SELECT read-only). Next.js: landing, /app con canvas Recharts y /app/unidades.",
+      "Postgres (agencies, units, ledger). FastAPI: CRUD de costos y agente Groq con RAG retrieve-then-generate (kpis_flota, stock, mix, P&L, SELECT read-only). Next.js: landing, /app con canvas Recharts y /app/unidades.",
     stack: [
       "FastAPI",
       "PostgreSQL",
+      "RAG",
       "Groq (tool calling)",
       "Next.js 15",
       "Recharts",
     ],
     highlights: [
+      "RAG sobre stock y P&L: el agente recupera antes de contestar.",
       "Tres agencias, ~130 unidades; ledger acotado por línea de negocio.",
-      "Multa en un 0 km → 400; usados y rentas aceptan multa, patente y mantenimiento.",
       "El agente mueve el canvas (gráficas de lo consultado) y deja el SQL a la vista.",
     ],
     coverPath: "/covers/cover-autostock-ai.png",
     repoUrl: "https://github.com/Gonzalo-Gimenez/AutoStock-AI",
+  },
+  {
+    slug: "chatbot-ai",
+    title: "Agente de Llamadas",
+    roleLabel: "AI Engineer",
+    status: "shipped",
+    tagline:
+      "IA conversacional telefónica: el agente llama o atiende, recupera FAQs (RAG) y responde en tiempo real.",
+    summary:
+      "FastAPI + Twilio Voice, dashboard de KPIs y router de motores (Groq, OpenAI, Gemini) con trazabilidad por llamada.",
+    why: "Un agente que automatiza el contacto por voz sin inventar políticas: antes de cada respuesta recupera fragmentos de la base de conocimiento (RAG) y conversa en frases cortas aptas para teléfono. El dashboard muestra contactos, llamadas, contestadas, conversión y qué motor de IA usó cada llamada.",
+    architecture:
+      "Postgres (contacts, calls, utterances, kb_chunks). FastAPI: webhooks Twilio Gather o modo DEV_MOCK; flujo retrieve-then-generate con ranking léxico sobre la KB; interfaz LLMProvider y router por llamada o env. Next.js 15: KPIs, llamadas por día y estados.",
+    stack: [
+      "Python",
+      "FastAPI",
+      "Twilio",
+      "RAG",
+      "Groq",
+      "OpenAI",
+      "Gemini",
+      "Next.js 15",
+      "PostgreSQL",
+    ],
+    highlights: [
+      "RAG en cada turno de voz: contexto desde kb_chunks antes del LLM.",
+      "Varios motores con Groq por defecto; keys opcionales para OpenAI y Gemini.",
+      "Dashboard oscuro con KPIs, serie diaria y motor/modelo por llamada.",
+    ],
+    coverPath: "/covers/cover-chatbot-ai.png",
+    repoUrl: "https://github.com/Gonzalo-Gimenez/Chatbot-AI",
+  },
+  {
+    slug: "trading-agents",
+    title: "TradingAgents",
+    roleLabel: "AI Engineer",
+    status: "shipped",
+    tagline:
+      "Forex por probabilidad: conteo de cajas, libro entre pares, Groq narra contexto y Kev calibra la decisión.",
+    summary:
+      "Agente MT4 paper/demo: cambios MN→D1, gestión D3–D6, MAL y cobertura entre majors; dashboard Auto / Confirmar / Manual.",
+    why: "La operativa no es un hedge de banco: es contar cambios de caja, esperar retrocesos en zona de 15–20 pips y gestionar un libro EUR-like vs USD-fuerte para empatar o recuperar con 3R. Groq explica el estado estructurado; Kev devuelve probabilidades tipadas antes de disparar.",
+    architecture:
+      "FastAPI: features de cajas/fractales/psicológicos, book multi-par, política de ladder y canasta. Groq (texto) + Kev `POST /v1/systemone`. Postgres journal. Next.js: KPIs, cola de propuestas y modos de ejecución. EA MQL4 WebRequest.",
+    stack: [
+      "Python",
+      "FastAPI",
+      "Groq",
+      "Kev",
+      "MT4",
+      "PostgreSQL",
+      "Next.js 15",
+    ],
+    highlights: [
+      "Conteo de cambios y fases MAL; sin inventar el gráfico — estado estructurado.",
+      "Book correlacionado/inverso: expandir si ganás, cubrir solo en drawdown.",
+      "Auto, Confirmar o Manual; fine-tune Kev desde el diario JSONL.",
+    ],
+    coverPath: "/covers/cover-trading-agents.png",
+    repoUrl: "https://github.com/Gonzalo-Gimenez/TradingAgents-AI",
   },
   {
     slug: "agroblock",
@@ -135,9 +199,9 @@ export const WORKS: WorkItem[] = [
       "Ecosistema agtech de ganado: collares IoT, trazabilidad y gestión del rodeo en el campo.",
     summary:
       "Plataforma para seguir el ganado con collar IoT: ubicación, estado y operación del establecimiento.",
-    why: "Agroblock es un ecosistema agtech de ganado. El collar IoT sale al campo; la plataforma concentra trazabilidad, alertas y la operación del rodeo. La landing del producto está en www.agroblock.com.ar.",
+    why: "Agroblock es un ecosistema agtech de ganado. El collar IoT sale al campo; la plataforma concentra trazabilidad, alertas y la operación del rodeo.",
     architecture:
-      "Collar IoT en el animal, telemetría hacia la plataforma y pantallas para el productor. Las alertas salen del dato del collar: automatizaciones que entran en el día a día del establecimiento. El front público de la landing se ve en www.agroblock.com.ar.",
+      "Collar IoT en el animal, telemetría hacia la plataforma y pantallas para el productor. Las alertas salen del dato del collar: automatizaciones que entran en el día a día del establecimiento.",
     stack: ["IoT", "Next.js", "Node.js", "PostgreSQL"],
     highlights: [
       "Collar IoT como fuente de verdad del animal en el campo.",
@@ -145,7 +209,7 @@ export const WORKS: WorkItem[] = [
       "Ecosistema de punta a punta: hardware en el animal y software en el establecimiento.",
     ],
     coverPath: "/covers/cover-agroblock.png",
-    siteUrl: "https://www.agroblock.com.ar",
+    siteUrl: "https://agroblock.com.ar",
   },
   {
     slug: "perkis",

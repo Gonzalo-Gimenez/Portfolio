@@ -13,14 +13,14 @@ export type WorkCopy = {
 export const WORKS_EN: Record<WorkSlug, WorkCopy> = {
   insightai: {
     tagline:
-      "Operations platform with an AI chatbot: it queries the system databases and shows charts for what you ask.",
+      "Operations platform with a RAG chatbot: it retrieves from the warehouse and shows charts for what you ask.",
     summary:
-      "Analytics platform: the AI agent answers from PostgreSQL and updates KPIs and charts from the question.",
-    why: "InsightAI is an operations platform with an AI chatbot. The agent does not invent figures: it queries the system databases (Nortec warehouse) and, on the same desk, shows the specific charts for what you asked: revenue, mix, ranking, or a branch cut.",
+      "Analytics platform: RAG over PostgreSQL — the agent retrieves data and updates KPIs and charts from the question.",
+    why: "InsightAI is an operations platform with an AI chatbot. The agent does not invent figures: it first retrieves from the Nortec warehouse (RAG via SQL tools), then answers; on the same desk it shows charts for the cut — revenue, mix, ranking, or a branch.",
     architecture:
-      "Nortec retail in PostgreSQL (~190k rows). FastAPI + Groq: the AI agent calls SQL tools or a validated read-only SELECT. The API builds a ViewSpec; Next.js 15 and Recharts paint the canvas. The SQL used stays visible in the chat.",
+      "Nortec retail in PostgreSQL (~190k rows). FastAPI + Groq: RAG retrieve-then-generate — SQL tools or validated read-only SELECT, context to the LLM, grounded answer. The API builds a ViewSpec; Next.js 15 and Recharts paint the canvas. The SQL used stays visible in the chat.",
     highlights: [
-      "AI chatbot grounded in the databases: KPIs, series, mix, ranking, or read-only SQL.",
+      "RAG on the warehouse: retrieves KPIs, series, mix, ranking, or read-only SQL before answering.",
       "Charts clip to the question filter (branch, year, period).",
       "Single-statement SELECT, allowed tables, and LIMIT.",
     ],
@@ -55,17 +55,47 @@ export const WORKS_EN: Record<WorkSlug, WorkCopy> = {
       "Data layer (AutoStock-Data). Not the AutoStock management platform.",
     ],
   },
+  "chatbot-ai": {
+    title: "Call Agent",
+    tagline:
+      "Phone conversational AI: the agent calls or answers, retrieves FAQs (RAG), and responds in real time.",
+    summary:
+      "FastAPI + Twilio Voice, KPI dashboard, and an LLM router (Groq, OpenAI, Gemini) with per-call traceability.",
+    why: "An agent that automates voice outreach without inventing policies: before each reply it retrieves knowledge-base chunks (RAG) and speaks in short phone-friendly sentences. The dashboard shows contacts, calls, answered rate, conversion, and which AI engine each call used.",
+    architecture:
+      "Postgres (contacts, calls, utterances, kb_chunks). FastAPI: Twilio Gather webhooks or DEV_MOCK mode; retrieve-then-generate with lexical ranking on the KB; LLMProvider interface and router per call or env. Next.js 15: KPIs, calls per day, and status mix.",
+    highlights: [
+      "RAG on every voice turn: context from kb_chunks before the LLM.",
+      "Multiple engines with Groq as default; optional keys for OpenAI and Gemini.",
+      "Dark dashboard with KPIs, daily series, and engine/model per call.",
+    ],
+  },
+  "trading-agents": {
+    title: "TradingAgents",
+    tagline:
+      "Forex by probability: box change counts, multi-pair book, Groq narrates context and Kev calibrates the decision.",
+    summary:
+      "MT4 paper/demo agent: MN→D1 change counts, D3–D6 management, MAL and cross-major recovery; Auto / Confirm / Manual dashboard.",
+    why: "This is not bank-style hedging: count box changes, wait for retraces in a 15–20 pip zone, and run an EUR-like vs USD-strong book to break even or recover with 3R. Groq explains structured state; Kev returns typed probabilities before firing.",
+    architecture:
+      "FastAPI: box/fractal/psych features, multi-pair book, ladder and basket policy. Groq (text) + Kev `POST /v1/systemone`. Postgres journal. Next.js: KPIs, proposal queue, execution modes. MQL4 WebRequest EA.",
+    highlights: [
+      "Change counts and MAL phases from structured state, not chart screenshots.",
+      "Correlated/inverse book: expand when ahead, cover only in drawdown.",
+      "Auto, Confirm, or Manual; fine-tune Kev from JSONL journal export.",
+    ],
+  },
   "autostock-ai": {
     tagline:
       "Agency and vehicle-fleet platform, with an AI agent to query stock and P&L.",
     summary:
       "Multi-branch platform: landing, desk with an AI agent, and unit cards to log costs by business line.",
-    why: "AutoStock is the platform used to run agencies and the fleet (new, used, rental, and apps). The AI agent queries the system databases; in parallel, each unit has a card to register costs with rules per line.",
+    why: "AutoStock is the platform used to run agencies and the fleet (new, used, rental, and apps). The RAG agent retrieves from ledger and stock before answering; in parallel, each unit has a card to register costs with rules per line.",
     architecture:
-      "Postgres (agencies, units, ledger). FastAPI: cost CRUD with a 0km/used/rental matrix and a Groq agent (fleet KPIs, stock, mix, P&L, read-only SELECT). Next.js: landing, /app with a Recharts canvas, and /app/unidades.",
+      "Postgres (agencies, units, ledger). FastAPI: cost CRUD and a Groq agent with RAG retrieve-then-generate (fleet KPIs, stock, mix, P&L, read-only SELECT). Next.js: landing, /app with a Recharts canvas, and /app/unidades.",
     highlights: [
+      "RAG on stock and P&L: the agent retrieves before it answers.",
       "Three agencies, about 130 units; ledger scoped by business line.",
-      "A fine on a new car returns 400; used and rental accept fine, plate, and maintenance.",
       "The agent moves the canvas (charts for what you asked) and leaves the SQL in view.",
     ],
   },
@@ -74,9 +104,9 @@ export const WORKS_EN: Record<WorkSlug, WorkCopy> = {
       "Livestock agtech ecosystem: IoT collars, traceability, and herd management in the field.",
     summary:
       "Platform to follow cattle with an IoT collar: location, status, and ranch operations.",
-    why: "Agroblock is a livestock agtech ecosystem. The IoT collar goes to the field; the platform concentrates traceability, alerts, and herd operations. The product landing is at www.agroblock.com.ar.",
+    why: "Agroblock is a livestock agtech ecosystem. The IoT collar goes to the field; the platform concentrates traceability, alerts, and herd operations.",
     architecture:
-      "IoT collar on the animal, telemetry into the platform, and screens for the producer. Alerts come from the collar data: automations that land in the ranch's everyday work. The public landing is at www.agroblock.com.ar.",
+      "IoT collar on the animal, telemetry into the platform, and screens for the producer. Alerts come from the collar data: automations that land in the ranch's everyday work.",
     highlights: [
       "IoT collar as the source of truth for the animal in the field.",
       "Alert automations on the herd, driven by the collar.",
