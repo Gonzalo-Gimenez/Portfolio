@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { CoverMedia } from "@/components/media/CoverMedia";
-import { WORKS, type WorkItem } from "@/lib/projects";
+import { getWork, type WorkItem } from "@/lib/projects";
 
 function Stack({ work }: { work: WorkItem }) {
   return (
@@ -33,7 +33,11 @@ function WorkCopy({ work }: { work: WorkItem }) {
 }
 
 export function WorkShowcase() {
-  const [insight, energia, flota, autostock] = WORKS;
+  const insight = getWork("insightai");
+  const autostock = getWork("autostock-ai");
+  const aurelia = getWork("aurelia");
+  const calls = getWork("chatbot-ai");
+  if (!insight || !autostock || !aurelia || !calls) return null;
 
   return (
     <div>
@@ -54,45 +58,15 @@ export function WorkShowcase() {
       </Link>
 
       <Link
-        href={`/trabajo/${energia.slug}`}
+        href={`/trabajo/${autostock.slug}`}
         className="group grid overflow-hidden border-t border-[var(--border)] lg:grid-cols-2"
       >
         <div className="flex flex-col justify-center px-5 py-14 sm:px-8 sm:py-20">
           <div className="mx-auto w-full max-w-xl">
-            <WorkCopy work={energia} />
+            <WorkCopy work={autostock} />
           </div>
         </div>
         <div className="relative min-h-[52dvh] lg:min-h-[88dvh]">
-          <CoverMedia
-            src={energia.coverPath}
-            alt=""
-            motion="rise"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-          />
-        </div>
-      </Link>
-
-      <Link
-        href={`/trabajo/${flota.slug}`}
-        className="group relative block min-h-[88dvh] overflow-hidden border-t border-[var(--border)]"
-      >
-        <CoverMedia src={flota.coverPath} alt="" motion="drift" />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,16,18,0.55)_0%,rgba(13,16,18,0.2)_35%,rgba(13,16,18,0.9)_100%)]"
-        />
-        <div className="relative z-10 flex min-h-[88dvh] items-end px-5 py-12 sm:px-8 sm:py-16">
-          <div className="mx-auto w-full max-w-6xl">
-            <WorkCopy work={flota} />
-          </div>
-        </div>
-      </Link>
-
-      <Link
-        href={`/trabajo/${autostock.slug}`}
-        className="group grid overflow-hidden border-t border-[var(--border)] lg:grid-cols-2"
-      >
-        <div className="relative min-h-[52dvh] order-2 lg:order-1 lg:min-h-[88dvh]">
           <CoverMedia
             src={autostock.coverPath}
             alt="Flota AutoStock — autos en portada"
@@ -100,9 +74,39 @@ export function WorkShowcase() {
             sizes="(min-width: 1024px) 50vw, 100vw"
           />
         </div>
+      </Link>
+
+      <Link
+        href={`/trabajo/${aurelia.slug}`}
+        className="group relative block min-h-[88dvh] overflow-hidden border-t border-[var(--border)]"
+      >
+        <CoverMedia src={aurelia.coverPath} alt="" motion="drift" />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,16,18,0.55)_0%,rgba(13,16,18,0.2)_35%,rgba(13,16,18,0.9)_100%)]"
+        />
+        <div className="relative z-10 flex min-h-[88dvh] items-end px-5 py-12 sm:px-8 sm:py-16">
+          <div className="mx-auto w-full max-w-6xl">
+            <WorkCopy work={aurelia} />
+          </div>
+        </div>
+      </Link>
+
+      <Link
+        href={`/trabajo/${calls.slug}`}
+        className="group grid overflow-hidden border-t border-[var(--border)] lg:grid-cols-2"
+      >
+        <div className="relative min-h-[52dvh] order-2 lg:order-1 lg:min-h-[88dvh]">
+          <CoverMedia
+            src={calls.coverPath}
+            alt=""
+            motion="rise"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+          />
+        </div>
         <div className="flex flex-col justify-center px-5 py-14 order-1 sm:px-8 sm:py-20 lg:order-2">
           <div className="mx-auto w-full max-w-xl">
-            <WorkCopy work={autostock} />
+            <WorkCopy work={calls} />
           </div>
         </div>
       </Link>

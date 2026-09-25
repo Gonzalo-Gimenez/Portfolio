@@ -85,6 +85,22 @@ export const WORKS_EN: Record<WorkSlug, WorkCopy> = {
       "Auto, Confirm, or Manual; fine-tune Kev from JSONL journal export.",
     ],
   },
+  aurelia: {
+    title: "Aurelia",
+    roleLabel: "Full stack",
+    tagline:
+      "Fictional luxury dealership: 3D coverflow, OEM catalog, and a full production site.",
+    summary:
+      "Next.js 15 with a Three.js coverflow, local catalog, and content for every menu section. Optional Nest API.",
+    why: "Aurelia is an invented marque, structured like an OEM site. The case is end-to-end product: cinematic home, 3D model walk, spec sheets, services, brands, and company — original cars and images, no affiliation with any real brand.",
+    architecture:
+      "Next.js 15 and Tailwind 4: front-end catalog, R3F/Three.js coverflow, local content pages. NestJS + Prisma + PostgreSQL stay an optional API for leads and appointments. The Vercel deploy serves the frontend without a database.",
+    highlights: [
+      "3D walk of the range (sedan, SUV, coupe, cabrio) in one shared scene.",
+      "OEM mega menu: Models, Advise, Services, Brands, Technology, Company.",
+      "Live production site, original cars, no real-brand logos.",
+    ],
+  },
   "autostock-ai": {
     tagline:
       "Agency and vehicle-fleet platform, with an AI agent to query stock and P&L.",

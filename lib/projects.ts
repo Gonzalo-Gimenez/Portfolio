@@ -7,6 +7,7 @@ export type WorkSlug =
   | "autostock-ai"
   | "chatbot-ai"
   | "trading-agents"
+  | "aurelia"
   | "agroblock"
   | "perkis"
   | "cinemaland";
@@ -30,7 +31,7 @@ export type WorkItem = {
   siteUrl?: string;
 };
 
-export const WORKS: WorkItem[] = [
+const WORKS_SOURCE: WorkItem[] = [
   {
     slug: "insightai",
     title: "InsightAI",
@@ -191,6 +192,28 @@ export const WORKS: WorkItem[] = [
     repoUrl: "https://github.com/Gonzalo-Gimenez/TradingAgents-AI",
   },
   {
+    slug: "aurelia",
+    title: "Aurelia",
+    roleLabel: "Full stack",
+    status: "shipped",
+    tagline:
+      "Concesionaria de lujo ficticia: pasarela 3D, catálogo OEM y sitio completo en producción.",
+    summary:
+      "Next.js 15 con pasarela Three.js, catálogo local y contenido de todas las secciones del menú. API Nest opcional.",
+    why: "Aurelia es una marca inventada, inspirada en la estructura de un sitio OEM. El caso es producto de punta a punta: home cinematográfica, pasarela 3D de modelos, fichas, servicios, marcas y empresa — con autos e imágenes originales, sin afiliación a ninguna marca real.",
+    architecture:
+      "Next.js 15 y Tailwind 4: catálogo en el front, pasarela R3F/Three.js y páginas de contenido locales. NestJS + Prisma + PostgreSQL quedan como API opcional para leads y turnos. El deploy en Vercel sirve el frontend sin base de datos.",
+    stack: ["Next.js 15", "Three.js", "Tailwind 4", "NestJS", "Prisma"],
+    highlights: [
+      "Pasarela 3D de la gama (sedán, SUV, coupé, cabrio) sobre un mismo ambiente.",
+      "Mega menú OEM con Modelos, Asesorate, Servicios, Marcas, Tecnología y Empresa.",
+      "Sitio en producción, autos originales, sin logos de marcas reales.",
+    ],
+    coverPath: "/covers/cover-aurelia.png",
+    siteUrl: "https://car-dealership-henna.vercel.app/",
+    repoUrl: "https://github.com/Gonzalo-Gimenez/Car-Dealership",
+  },
+  {
     slug: "agroblock",
     title: "Agroblock",
     roleLabel: "AgTech",
@@ -252,6 +275,25 @@ export const WORKS: WorkItem[] = [
     coverPath: "/covers/cover-cinemaland.png",
   },
 ];
+
+const GALLERY_ORDER: WorkSlug[] = [
+  "insightai",
+  "autostock-ai",
+  "aurelia",
+  "chatbot-ai",
+  "agroblock",
+  "trading-agents",
+  "energia",
+  "flota",
+  "cinemaland",
+  "perkis",
+];
+
+export const WORKS: WorkItem[] = GALLERY_ORDER.map((slug) => {
+  const work = WORKS_SOURCE.find((item) => item.slug === slug);
+  if (!work) throw new Error(`Missing work: ${slug}`);
+  return work;
+});
 
 export function getWork(slug: string): WorkItem | undefined {
   return WORKS.find((w) => w.slug === slug);
