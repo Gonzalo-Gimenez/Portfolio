@@ -68,6 +68,8 @@ export const UI = {
     caseUpcoming: "Próximo",
     footerAria: "Pie de página",
     photoAlt: "Retrato de",
+    menuOpen: "Abrir menú",
+    menuClose: "Cerrar menú",
   },
   en: {
     navAria: "Site sections",
@@ -129,6 +131,8 @@ export const UI = {
     caseUpcoming: "Coming soon",
     footerAria: "Footer",
     photoAlt: "Portrait of",
+    menuOpen: "Open menu",
+    menuClose: "Close menu",
   },
 } as const;
 

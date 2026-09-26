@@ -1,14 +1,14 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useRouter } from "next/navigation";
-import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import type { Group } from "three";
 
 import { WORKS, type WorkItem } from "@/lib/projects";
-import { usePrefersReducedMotion } from "@/lib/hooks/use-media";
+import { usePrefersReducedMotion, useGalleryDensity, type GalleryDensity } from "@/lib/hooks/use-media";
 
 const COUNT = WORKS.length;
 const CARD_W = 3.85;
@@ -38,8 +38,30 @@ function signedOffset(cardIndex: number, activeIndex: number): number {
   return delta;
 }
 
-function slotFromOffset(offset: number): Slot {
+function slotFromOffset(offset: number, density: GalleryDensity): Slot {
   const abs = Math.abs(offset);
+  if (density === "phone") {
+    const theta = offset * 0.5;
+    const radius = 3.2;
+    return {
+      x: Math.sin(theta) * radius,
+      y: 0.22,
+      z: -(1 - Math.cos(theta)) * 2.05 + (abs === 0 ? 0.42 : 0),
+      rotY: -theta * 0.82,
+      scale: abs === 0 ? 1.04 : Math.max(0.58, 0.84 - abs * 0.16),
+    };
+  }
+  if (density === "tablet") {
+    const theta = offset * 0.46;
+    const radius = 4.15;
+    return {
+      x: Math.sin(theta) * radius,
+      y: 0.32,
+      z: -(1 - Math.cos(theta)) * 2.45 + (abs === 0 ? 0.48 : 0),
+      rotY: -theta * 0.86,
+      scale: abs === 0 ? 1.06 : Math.max(0.5, 0.84 - abs * 0.13),
+    };
+  }
   const theta = offset * 0.42;
   const radius = 5.05;
   return {
@@ -340,6 +362,7 @@ function ProjectCard({
   textures,
   onSelectSide,
   reduced,
+  density,
 }: {
   work: WorkItem;
   cardIndex: number;
@@ -347,6 +370,7 @@ function ProjectCard({
   textures: THREE.Texture[];
   onSelectSide: (index: number) => void;
   reduced: boolean;
+  density: GalleryDensity;
 }) {
   const router = useRouter();
   const group = useRef<Group>(null);
@@ -354,7 +378,7 @@ function ProjectCard({
   const texture = textures[cardIndex];
   const offset = signedOffset(cardIndex, activeIndex);
   const isFront = offset === 0;
-  const slot = slotFromOffset(offset);
+  const slot = slotFromOffset(offset, density);
   const targetPos = useRef(new THREE.Vector3(slot.x, slot.y, slot.z));
   const rimStrength = isFront ? 1 : hovered ? 0.85 : 0.45;
   const platformStrength = isFront
@@ -433,16 +457,35 @@ function ProjectCard({
   );
 }
 
+function SceneCamera({ density }: { density: GalleryDensity }) {
+  const camera = useThree((s) => s.camera as THREE.PerspectiveCamera);
+  useLayoutEffect(() => {
+    const cfg =
+      density === "phone"
+        ? { pos: [0, 0.2, 6.05] as const, fov: 40 }
+        : density === "tablet"
+          ? { pos: [0, 0.24, 7.25] as const, fov: 36 }
+          : { pos: [0, 0.28, 8.35] as const, fov: 34 };
+    camera.position.set(cfg.pos[0], cfg.pos[1], cfg.pos[2]);
+    camera.fov = cfg.fov;
+    camera.updateProjectionMatrix();
+  }, [camera, density]);
+  return null;
+}
+
 function CoverflowRig({
   activeIndex,
   onSelectSide,
   reduced,
+  density,
 }: {
   activeIndex: number;
   onSelectSide: (index: number) => void;
   reduced: boolean;
+  density: GalleryDensity;
 }) {
   const textures = useTexture(WORKS.map((w) => w.coverPath));
+  const maxOffset = density === "phone" ? 1 : 2;
 
   useMemo(() => {
     textures.forEach((t) => {
@@ -453,6 +496,7 @@ function CoverflowRig({
 
   return (
     <>
+      <SceneCamera density={density} />
       <fog attach="fog" args={["#101318", 18, 32]} />
       <ambientLight intensity={0.85} />
       <directionalLight position={[4, 5, 6]} intensity={0.55} />
@@ -463,17 +507,20 @@ function CoverflowRig({
         intensity={0.9}
         color="#e8f4ff"
       />
-      {WORKS.map((work, i) => (
-        <ProjectCard
-          key={work.slug}
-          work={work}
-          cardIndex={i}
-          activeIndex={activeIndex}
-          textures={textures}
-          onSelectSide={onSelectSide}
-          reduced={reduced}
-        />
-      ))}
+      {WORKS.map((work, i) =>
+        Math.abs(signedOffset(i, activeIndex)) > maxOffset ? null : (
+          <ProjectCard
+            key={work.slug}
+            work={work}
+            cardIndex={i}
+            activeIndex={activeIndex}
+            textures={textures}
+            onSelectSide={onSelectSide}
+            reduced={reduced}
+            density={density}
+          />
+        ),
+      )}
     </>
   );
 }
@@ -487,12 +534,13 @@ export default function CoverflowScene({
 }) {
   const wrap = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
+  const density = useGalleryDensity();
 
   return (
     <div ref={wrap} className="absolute inset-0">
       <Canvas
         camera={{ position: [0, 0.28, 8.35], fov: 34 }}
-        dpr={[1, 1.75]}
+        dpr={[1, density === "phone" ? 1.5 : 1.75]}
         gl={{
           antialias: true,
           alpha: true,
@@ -512,6 +560,7 @@ export default function CoverflowScene({
             activeIndex={activeIndex}
             onSelectSide={onSelectSide}
             reduced={reduced}
+            density={density}
           />
         </Suspense>
       </Canvas>

@@ -43,12 +43,12 @@ function ProjectHud({ activeIndex }: { activeIndex: number }) {
   const work = localizeWork(source, locale);
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-4 text-center">
-      <p className="xenon-text text-sm">{work.roleLabel}</p>
-      <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+    <div className="mx-auto w-full max-w-2xl space-y-3 text-center sm:space-y-4">
+      <p className="xenon-text text-xs sm:text-sm">{work.roleLabel}</p>
+      <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
         {work.title}
       </h2>
-      <p className="text-base leading-relaxed text-[var(--text-secondary)]">
+      <p className="px-1 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
         {work.tagline}
       </p>
       <ul className="flex flex-wrap items-center justify-center gap-2">
@@ -128,7 +128,7 @@ export function CoverflowGallery() {
     const dy = clientY - dragStart.current.y;
     dragStart.current = null;
     setPaused(false);
-    if (Math.abs(dx) < 56) return;
+    if (Math.abs(dx) < 40) return;
     if (Math.abs(dy) >= Math.abs(dx) * 0.7) return;
     if (dx > 0) goPrev();
     else goNext();
@@ -145,19 +145,15 @@ export function CoverflowGallery() {
         </div>
 
         {webgl === null ? (
-          <div className="mt-8 flex h-[38rem] items-center justify-center text-sm text-[var(--text-muted)] sm:mt-10 sm:h-[44rem]">
+          <div className="mt-6 flex h-[22rem] items-center justify-center text-sm text-[var(--text-muted)] sm:mt-8 sm:h-[32rem] md:h-[40rem] lg:h-[46rem]">
             {t.galleryPreparing}
           </div>
         ) : use3D ? (
           <div
-            className="relative mt-8 h-[40rem] w-full touch-pan-y sm:mt-10 sm:h-[46rem] [mask-image:linear-gradient(to_bottom,#000_0%,#000_82%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,#000_0%,#000_82%,transparent_100%)]"
+            className="relative mt-6 h-[22rem] w-full touch-pan-y sm:mt-8 sm:h-[32rem] md:h-[40rem] lg:mt-10 lg:h-[46rem] lg:[mask-image:linear-gradient(to_bottom,#000_0%,#000_82%,transparent_100%)] lg:[-webkit-mask-image:linear-gradient(to_bottom,#000_0%,#000_82%,transparent_100%)]"
             onPointerDown={onPointerDown}
             onPointerUp={(e) => finishDrag(e.clientX, e.clientY)}
             onPointerCancel={() => {
-              dragStart.current = null;
-              setPaused(false);
-            }}
-            onPointerLeave={() => {
               dragStart.current = null;
               setPaused(false);
             }}
@@ -175,7 +171,7 @@ export function CoverflowGallery() {
           </div>
         )}
 
-        <div className="relative z-10 -mt-16 flex justify-center gap-16 pb-8 sm:-mt-20 sm:gap-24">
+        <div className="relative z-10 -mt-4 flex justify-center gap-10 pb-6 sm:-mt-8 sm:gap-16 sm:pb-8 md:-mt-16 md:gap-24">
           <button
             type="button"
             onClick={goPrev}
@@ -194,7 +190,7 @@ export function CoverflowGallery() {
           </button>
         </div>
 
-        <div className="px-5 pb-20 pt-6 sm:px-8 sm:pb-28 sm:pt-8">
+        <div className="px-5 pb-16 pt-4 sm:px-8 sm:pb-28 sm:pt-8">
           <ProjectHud activeIndex={activeIndex} />
         </div>
       </div>

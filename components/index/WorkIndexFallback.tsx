@@ -19,7 +19,7 @@ export function WorkIndexFallback() {
                 href={`/trabajo/${work.slug}`}
                 className="flex items-baseline justify-between gap-6 border-t border-[var(--border)] py-5"
               >
-                <span className="text-2xl font-semibold tracking-tight sm:text-4xl">
+                <span className="truncate text-xl font-semibold tracking-tight sm:text-2xl md:text-4xl">
                   {work.title}
                 </span>
                 <span className="shrink-0 text-sm text-[var(--accent)]">

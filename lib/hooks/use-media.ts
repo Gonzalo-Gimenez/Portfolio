@@ -32,3 +32,34 @@ export function useWebGLAvailable(): boolean | null {
 
   return ok;
 }
+
+export type GalleryDensity = "phone" | "tablet" | "desktop";
+
+function densityFromWidth(width: number): GalleryDensity {
+  if (width <= 639) return "phone";
+  if (width <= 1023) return "tablet";
+  return "desktop";
+}
+
+export function useGalleryDensity(): GalleryDensity {
+  const [density, setDensity] = useState<GalleryDensity>(() =>
+    typeof window === "undefined"
+      ? "desktop"
+      : densityFromWidth(window.innerWidth),
+  );
+
+  useEffect(() => {
+    const phone = window.matchMedia("(max-width: 639px)");
+    const tablet = window.matchMedia("(max-width: 1023px)");
+    const update = () => setDensity(densityFromWidth(window.innerWidth));
+    update();
+    phone.addEventListener("change", update);
+    tablet.addEventListener("change", update);
+    return () => {
+      phone.removeEventListener("change", update);
+      tablet.removeEventListener("change", update);
+    };
+  }, []);
+
+  return density;
+}

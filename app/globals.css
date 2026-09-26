@@ -199,6 +199,12 @@ body::after {
   filter: blur(26px);
 }
 
+@media (pointer: coarse) {
+  .xenon-mouse-orb {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
