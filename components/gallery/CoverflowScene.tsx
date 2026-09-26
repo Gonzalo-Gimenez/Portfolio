@@ -62,14 +62,23 @@ function slotFromOffset(offset: number, density: GalleryDensity): Slot {
       scale: abs === 0 ? 0.86 : Math.max(0.46, 0.72 - abs * 0.12),
     };
   }
-  const theta = offset * 0.42;
-  const radius = 5.05;
+  const sign = Math.sign(offset);
+  const thetaAbs =
+    abs <= 1
+      ? abs * 0.34
+      : abs <= 2
+        ? 0.34 + (abs - 1) * 0.27
+        : abs <= 3
+          ? 0.61 + (abs - 2) * 0.4
+          : 1.01 + (abs - 3) * 0.26;
+  const theta = sign * thetaAbs;
+  const radius = 4.95;
   return {
     x: Math.sin(theta) * radius,
     y: 0.42,
-    z: -(1 - Math.cos(theta)) * 2.85 + (abs === 0 ? 0.55 : 0),
-    rotY: -theta * 0.9,
-    scale: abs === 0 ? 1.08 : Math.max(0.4, 0.84 - abs * 0.12),
+    z: -(1 - Math.cos(theta)) * 2.2 + (abs === 0 ? 0.55 : 0),
+    rotY: -theta * 0.74,
+    scale: abs === 0 ? 1.08 : Math.max(0.44, 0.86 - abs * 0.1),
   };
 }
 
