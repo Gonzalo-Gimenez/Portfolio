@@ -50,16 +50,19 @@ export function HomeContact() {
 
   return (
     <section id="contacto" className="scroll-mt-16 px-5 pb-20 sm:px-8 sm:pb-28">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl text-center md:text-left">
         <CenterRule />
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
           {t.contactTitle}
         </h2>
-        <p className="mt-4 max-w-[52ch] text-[var(--text-secondary)]">
+        <p className="mx-auto mt-4 max-w-[52ch] text-[var(--text-secondary)] md:mx-0">
           {t.contactLead}
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-10 grid max-w-xl gap-5">
+        <form
+          onSubmit={handleSubmit}
+          className="mx-auto mt-10 grid w-full max-w-xl gap-5 text-left md:mx-0"
+        >
           <div className="flex flex-col gap-2">
             <label
               htmlFor="contact-name"
@@ -119,7 +122,7 @@ export function HomeContact() {
           </div>
 
           <label
-            className="not-robot mx-auto flex w-[304px] cursor-pointer items-center gap-3 rounded-sm border border-[#d3d3d3] bg-[#f9f9f9] px-3 py-3 text-[#222]"
+            className="not-robot mx-auto flex w-full max-w-[304px] cursor-pointer items-center gap-3 rounded-sm border border-[#d3d3d3] bg-[#f9f9f9] px-3 py-3 text-[#222]"
             htmlFor="contact-human"
           >
             <input
@@ -144,7 +147,7 @@ export function HomeContact() {
 
           <button
             type="submit"
-            className="xenon-fill inline-flex w-fit cursor-pointer rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97]"
+            className="xenon-fill inline-flex w-fit cursor-pointer justify-self-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97]"
           >
             {t.contactSend}
           </button>

@@ -99,18 +99,33 @@ export function SiteNav() {
         style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50 }}
       >
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-5 sm:h-16 sm:px-8">
-          <Link
-            href="/#inicio"
-            onClick={closeMenu}
-            className="flex min-w-0 shrink items-center gap-2.5 text-sm font-medium tracking-tight text-[var(--text-primary)] sm:text-base"
-          >
-            <BrandMark className="h-8 w-8 shrink-0 sm:h-9 sm:w-9" />
-            <span className="truncate">
-              {SITE.firstName}
-              <span className="hidden text-[var(--text-muted)] sm:inline"> · </span>
-              <span className="xenon-text hidden sm:inline">{t.navRole}</span>
-            </span>
-          </Link>
+          <div className="flex min-w-0 items-center gap-1 sm:gap-2">
+            <button
+              type="button"
+              className="-ml-2 inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-[var(--text-primary)] lg:hidden"
+              aria-label={menuOpen ? t.menuClose : t.menuOpen}
+              aria-expanded={menuOpen}
+              aria-controls={menuId}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              {menuOpen ? <X size={22} weight="bold" /> : <List size={22} weight="bold" />}
+            </button>
+            <Link
+              href="/#inicio"
+              onClick={closeMenu}
+              className="flex min-w-0 items-center gap-2.5 text-sm font-medium tracking-tight text-[var(--text-primary)] sm:text-base"
+            >
+              <BrandMark className="h-8 w-8 shrink-0 sm:h-9 sm:w-9" />
+              <span className="truncate">
+                {SITE.firstName}
+                <span className="hidden text-[var(--text-muted)] sm:inline">
+                  {" "}
+                  ·{" "}
+                </span>
+                <span className="xenon-text hidden sm:inline">{t.navRole}</span>
+              </span>
+            </Link>
+          </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <nav
               aria-label={t.navAria}
@@ -134,16 +149,6 @@ export function SiteNav() {
               {t.talk}
               <ArrowRight size={14} weight="bold" aria-hidden />
             </Link>
-            <button
-              type="button"
-              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-[var(--text-primary)] lg:hidden"
-              aria-label={menuOpen ? t.menuClose : t.menuOpen}
-              aria-expanded={menuOpen}
-              aria-controls={menuId}
-              onClick={() => setMenuOpen((v) => !v)}
-            >
-              {menuOpen ? <X size={22} weight="bold" /> : <List size={22} weight="bold" />}
-            </button>
           </div>
         </div>
         {menuOpen ? (

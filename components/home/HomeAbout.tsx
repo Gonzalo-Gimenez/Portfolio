@@ -35,28 +35,31 @@ export function HomeAbout() {
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,19,24,0.94)_0%,rgba(16,19,24,0.78)_42%,rgba(16,19,24,0.28)_72%,rgba(16,19,24,0.12)_100%)]"
+          className="absolute inset-0 bg-[rgba(16,19,24,0.86)] md:bg-[linear-gradient(90deg,rgba(16,19,24,0.94)_0%,rgba(16,19,24,0.78)_42%,rgba(16,19,24,0.28)_72%,rgba(16,19,24,0.12)_100%)]"
         />
         <div
           aria-hidden
           className="absolute inset-0 bg-[linear-gradient(180deg,rgba(16,19,24,0.35)_0%,transparent_22%,transparent_78%,rgba(16,19,24,0.72)_100%)]"
         />
         <div className="relative z-10 mx-auto flex min-h-[36rem] max-w-6xl items-end px-5 py-16 sm:min-h-[42rem] sm:px-8 sm:py-24">
-          <div className="max-w-[40rem]">
+          <div className="mx-auto w-full max-w-[40rem] text-center md:mx-0 md:text-left">
             <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
               {t.profileTitle}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-[var(--text-primary)] sm:text-xl">
               {t.aboutLead}
             </p>
-            <div className="mt-4 max-w-[52ch] space-y-4 text-base leading-relaxed text-[var(--text-secondary)]">
+            <div className="mx-auto mt-4 max-w-[52ch] space-y-4 text-base leading-relaxed text-[var(--text-secondary)] md:mx-0">
               {t.aboutParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-            <ul className="mt-8 max-w-[52ch] space-y-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+            <ul className="mx-auto mt-8 flex max-w-[52ch] flex-col items-center gap-3 text-sm leading-relaxed text-[var(--text-secondary)] md:mx-0 md:items-start">
               {facts.map((fact) => (
-                <li key={fact.label} className="flex items-start gap-2.5">
+                <li
+                  key={fact.label}
+                  className="flex items-start justify-center gap-2.5 md:justify-start"
+                >
                   <fact.icon
                     size={18}
                     weight="regular"

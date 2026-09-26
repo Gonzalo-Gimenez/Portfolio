@@ -41,25 +41,25 @@ function signedOffset(cardIndex: number, activeIndex: number): number {
 function slotFromOffset(offset: number, density: GalleryDensity): Slot {
   const abs = Math.abs(offset);
   if (density === "phone") {
-    const theta = offset * 0.5;
-    const radius = 3.2;
+    const theta = offset * 0.36;
+    const radius = 2.45;
     return {
       x: Math.sin(theta) * radius,
-      y: 0.22,
-      z: -(1 - Math.cos(theta)) * 2.05 + (abs === 0 ? 0.42 : 0),
-      rotY: -theta * 0.82,
-      scale: abs === 0 ? 1.04 : Math.max(0.58, 0.84 - abs * 0.16),
+      y: 0.1,
+      z: -(1 - Math.cos(theta)) * 1.55 + (abs === 0 ? 0.28 : 0),
+      rotY: -theta * 0.78,
+      scale: abs === 0 ? 0.72 : Math.max(0.46, 0.62 - abs * 0.12),
     };
   }
   if (density === "tablet") {
-    const theta = offset * 0.46;
-    const radius = 4.15;
+    const theta = offset * 0.4;
+    const radius = 3.45;
     return {
       x: Math.sin(theta) * radius,
-      y: 0.32,
-      z: -(1 - Math.cos(theta)) * 2.45 + (abs === 0 ? 0.48 : 0),
-      rotY: -theta * 0.86,
-      scale: abs === 0 ? 1.06 : Math.max(0.5, 0.84 - abs * 0.13),
+      y: 0.22,
+      z: -(1 - Math.cos(theta)) * 2.05 + (abs === 0 ? 0.36 : 0),
+      rotY: -theta * 0.82,
+      scale: abs === 0 ? 0.86 : Math.max(0.46, 0.72 - abs * 0.12),
     };
   }
   const theta = offset * 0.42;
@@ -69,7 +69,7 @@ function slotFromOffset(offset: number, density: GalleryDensity): Slot {
     y: 0.42,
     z: -(1 - Math.cos(theta)) * 2.85 + (abs === 0 ? 0.55 : 0),
     rotY: -theta * 0.9,
-    scale: abs === 0 ? 1.08 : Math.max(0.4, 0.84 - abs * 0.12),
+    scale: abs === 0 ? 1 : Math.max(0.4, 0.84 - abs * 0.12),
   };
 }
 
@@ -462,9 +462,9 @@ function SceneCamera({ density }: { density: GalleryDensity }) {
   useLayoutEffect(() => {
     const cfg =
       density === "phone"
-        ? { pos: [0, 0.2, 6.05] as const, fov: 40 }
+        ? { pos: [0, 0.12, 6.65] as const, fov: 36 }
         : density === "tablet"
-          ? { pos: [0, 0.24, 7.25] as const, fov: 36 }
+          ? { pos: [0, 0.2, 7.55] as const, fov: 34 }
           : { pos: [0, 0.28, 8.35] as const, fov: 34 };
     camera.position.set(cfg.pos[0], cfg.pos[1], cfg.pos[2]);
     camera.fov = cfg.fov;

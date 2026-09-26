@@ -97,7 +97,7 @@ export function ContactRow() {
   const { locale, t } = useLocale();
   const cvHref = locale === "en" ? SITE.cvPathEn : SITE.cvPath;
   return (
-    <span className="inline-flex flex-nowrap items-center gap-x-5">
+    <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-2.5 sm:gap-x-5 md:justify-start">
       <a
         href={SITE.github}
         target="_blank"
