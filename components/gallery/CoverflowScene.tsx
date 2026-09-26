@@ -69,7 +69,7 @@ function slotFromOffset(offset: number, density: GalleryDensity): Slot {
     y: 0.42,
     z: -(1 - Math.cos(theta)) * 2.85 + (abs === 0 ? 0.55 : 0),
     rotY: -theta * 0.9,
-    scale: abs === 0 ? 1 : Math.max(0.4, 0.84 - abs * 0.12),
+    scale: abs === 0 ? 1.08 : Math.max(0.4, 0.84 - abs * 0.12),
   };
 }
 
@@ -485,7 +485,8 @@ function CoverflowRig({
   density: GalleryDensity;
 }) {
   const textures = useTexture(WORKS.map((w) => w.coverPath));
-  const maxOffset = density === "phone" ? 1 : 2;
+  const maxOffset =
+    density === "phone" ? 1 : density === "tablet" ? 2 : Number.POSITIVE_INFINITY;
 
   useMemo(() => {
     textures.forEach((t) => {

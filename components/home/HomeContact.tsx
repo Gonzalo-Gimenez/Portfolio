@@ -147,7 +147,7 @@ export function HomeContact() {
 
           <button
             type="submit"
-            className="xenon-fill inline-flex w-fit cursor-pointer justify-self-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97]"
+            className="xenon-fill inline-flex w-fit cursor-pointer justify-self-center rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--accent-fg)] transition-transform hover:scale-[0.98] active:scale-[0.97] md:justify-self-start"
           >
             {t.contactSend}
           </button>
